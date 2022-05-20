@@ -3,7 +3,8 @@ import { View, Text, SafeAreaView, StyleSheet, ImageBackground, ScrollView, Stat
 import * as Location from 'expo-location';
 import MapView, { Callout } from 'react-native-maps';
 import BotaoOrçamento from '../Componentes/BotaoOrçamento';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native'; 
+
 
 
 
@@ -49,6 +50,9 @@ export default function Main_user() {
 
         const { latitude, longitude } = coords;
 
+       
+        
+
         let response = await Location.reverseGeocodeAsync({
           latitude,
           longitude
@@ -59,6 +63,7 @@ export default function Main_user() {
           setLocalUserAtual(address);
         
         }
+
 
 
       }

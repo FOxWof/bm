@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, SafeAreaView, StyleSheet, ImageBackground, ScrollView, StatusBar, Dimensions, TextInput } from 'react-native';
 import BotaoVoltarAoInicio from './../Componentes/BotaoVoltarAoInicio';
 import { useNavigation } from '@react-navigation/native';
@@ -10,6 +10,7 @@ import PickerSelect from './../Componentes/PickerSelect';
 import PickerSelectServico from '../Componentes/PickerSelectServico';
 import PickerSelectPagamento from '../Componentes/PickerSelectPagamento';
 import BotaoAzul from './../Componentes/BotaoAzul';
+import { AuthContext } from '../Context/AuthContext';
 
 
 
@@ -19,14 +20,37 @@ export default function Tela_de_Orcamento(props) {
 
     const navegacao = useNavigation();
     const dados = props.route.params
-    const [numPneu, setSelectedLanguage] = useState();
 
+    const { usuario } = useContext(AuthContext);
+
+    const [veiculo, setVeiculo] = useState();
+    const [obs, setObs] = useState();
+
+
+
+
+
+    let dados_Confirmacao = {
+        dados,
+        usuario,
+
+    }
+
+
+
+
+
+    function h_voltar() {
+
+        navegacao.navigate('Inicio');
+
+    }
 
 
 
     function h_orcamento() {
 
-        navegacao.navigate('Inicio');
+        navegacao.navigate('Tela_de_Confirmacao', dados_Confirmacao);
 
     }
 
@@ -38,11 +62,11 @@ export default function Tela_de_Orcamento(props) {
             <StatusBar hidden={true} />
             <ScrollView>
 
-            <View style={{ padding: 15 }}>
+                <View style={{ padding: 15 }}>
 
 
                     <BotaoVoltarAoInicio
-                        acao={h_orcamento} />
+                        acao={h_voltar} />
 
 
 
@@ -58,22 +82,53 @@ export default function Tela_de_Orcamento(props) {
                         icone={'car-outline'}
                         hint={'Informe o modelo do seu veículo'}
                         iconeColor={colorPretoMaisFraco}
+                        valor={veiculo}
+                        onChange={setVeiculo}
                     />
 
 
                     <PickerSelect />
 
-                    <PickerSelectServico/>
+                    <PickerSelectServico />
 
-                    <PickerSelectPagamento/>
+                    <PickerSelectPagamento />
+
+
+                    <CardInputForm
+                        titulo={'Observação'}
+                        icone={'reader-outline'}
+                        hint={'Se você tiver alguma obs escreva aqui'}
+                        iconeColor={colorPretoMaisFraco}
+                        valor={obs}
+                        onChange={setObs}
+                    />
+
+
+
+
+
+                    <CardText
+                        titulo={usuario.dados.whatsapp}
+                        icone={'logo-whatsapp'}
+                        iconeCor={colorPretoMaisFraco}
+                    />
+
+
+
+                    <CardText
+                        titulo={usuario.dados.nome}
+                        icone={'person-outline'}
+                        iconeCor={colorPretoMaisFraco}
+                    />
 
 
                     <BotaoAzul
-                    titulo={'Confirmar orçamento'}/>
+                        acao={h_orcamento}
+                        titulo={'Gerar orçamento'} />
 
 
 
-            </View>
+                </View>
 
             </ScrollView>
 

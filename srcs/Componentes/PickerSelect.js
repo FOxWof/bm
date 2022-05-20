@@ -1,16 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, SafeAreaView, StyleSheet, ImageBackground } from 'react-native';
 import { Button } from 'react-native-paper';
 import { colorFacebookAzul } from '../../Paleta_cores';
 import { Picker } from '@react-native-picker/picker';
 import { colorBranco, colorPretoMaisFraco } from './../../Paleta_cores';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { AuthContext } from '../Context/AuthContext';
+
 
 
 
 export default function PickerSelect() {
 
   const [selectedLanguage, setSelectedLanguage] = useState();
+  const {get_numPneu} = useContext(AuthContext);
+
+  get_numPneu(selectedLanguage);
 
 
 

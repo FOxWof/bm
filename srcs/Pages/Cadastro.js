@@ -71,7 +71,7 @@ export default function Cadastro() {
 
         <ScrollView>
 
-          <BotaoVoltarAoInicio acao={voltarAoLobby} />
+          <BotaoVoltarAoInicio titulo={'Voltar ao inicio'} acao={voltarAoLobby} />
 
           <CardInput
             titulo={'Email'}

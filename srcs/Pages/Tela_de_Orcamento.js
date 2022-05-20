@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, SafeAreaView, StyleSheet, ImageBackground, ScrollView, StatusBar, Dimensions, TextInput } from 'react-native';
+import { View, Text, SafeAreaView, StyleSheet, ImageBackground, ScrollView, StatusBar, Alert, Dimensions, TextInput } from 'react-native';
 import BotaoVoltarAoInicio from './../Componentes/BotaoVoltarAoInicio';
 import { useNavigation } from '@react-navigation/native';
-import CardInput from './../Componentes/CardInput';
 import CardText from '../Componentes/CardText';
 import { colorFacebookAzul, colorPretoMaisFraco, colorBranco } from './../../Paleta_cores';
 import CardInputForm from '../Componentes/CardInputForm';
@@ -11,6 +10,12 @@ import PickerSelectServico from '../Componentes/PickerSelectServico';
 import PickerSelectPagamento from '../Componentes/PickerSelectPagamento';
 import BotaoAzul from './../Componentes/BotaoAzul';
 import { AuthContext } from '../Context/AuthContext';
+import { FirebaseContext } from '../Context/FirebaseContext';
+import { OrcamentoContext } from '../Context/OrcamentoContext';
+import PickerQuantidade from './../Componentes/PickerQuantidade';
+
+
+
 
 
 
@@ -18,23 +23,110 @@ import { AuthContext } from '../Context/AuthContext';
 
 export default function Tela_de_Orcamento(props) {
 
+    //CONST
+
     const navegacao = useNavigation();
     const dados = props.route.params
 
     const { usuario } = useContext(AuthContext);
+    const { numPneu, servico, formaPagamento, quantidade } = useContext(OrcamentoContext);
+    const { localizacaoUserRecuperada, recupera_dados_comId_noDoc, salvar_dados } = useContext(FirebaseContext);
 
-    const [veiculo, setVeiculo] = useState();
-    const [obs, setObs] = useState();
 
 
+    const [veiculo, setVeiculo] = useState('');
+    const [obs, setObs] = useState('');
+    const [localUser, setLocalUser] = useState();
+
+
+
+
+
+
+
+
+
+
+
+
+    //LETS
+
+
+    let nome_user = usuario.dados.nome;
+    let email_user = usuario.dados.email;
+    let whatsapp_user = usuario.dados.whatsapp;
+    let user_id = usuario.dados.user_id;
+
+
+
+
+    let dados_usuario = {
+        nome_user,
+        email_user,
+        whatsapp_user
+    }
+
+
+
+    let detalhes_orcamento = {
+        veiculo,
+        obs
+
+    }
 
 
 
     let dados_Confirmacao = {
         dados,
-        usuario,
-
+        dados_usuario,
+        detalhes_orcamento
     }
+
+
+
+
+
+
+    //USEEFFECTS
+
+
+
+    useEffect(() => {
+
+        recupera_dados_comId_noDoc('localizacao_atual', user_id);
+
+    }, [])
+
+
+
+
+
+    useEffect(() => {
+
+        if (localizacaoUserRecuperada == undefined) {
+
+            setLocalUser('Carregando...');
+
+
+        } else {
+            setLocalUser(localizacaoUserRecuperada.documento.address);
+        }
+
+    }, [localizacaoUserRecuperada])
+
+
+
+
+
+
+
+
+
+
+
+
+    //FUNCS
+
 
 
 
@@ -48,11 +140,55 @@ export default function Tela_de_Orcamento(props) {
 
 
 
+
     function h_orcamento() {
 
-        navegacao.navigate('Tela_de_Confirmacao', dados_Confirmacao);
+        if (veiculo == '' || veiculo == undefined) {
+            return Alert.alert('Espere um pouco', 'Você precisa informar o modelo do seu veiculo');
+        }
+
+        if (numPneu == null || veiculo == undefined) {
+            return Alert.alert('Espere um pouco', 'Você precisa confirmar a numeração do seu pneu');
+        }
+
+        if (servico == null || veiculo == undefined) {
+            return Alert.alert('Espere um pouco', 'Você deve confirmar o serviço que precisa');
+        }
+
+        if (formaPagamento == null || veiculo == undefined) {
+            return Alert.alert('Espere um pouco', 'Você precisa confirmar a forma de pagamento');
+        }
+
+
+        let dados_orcamento = {
+            user_id,
+            data_criacao: new Date(),
+            dados_Confirmacao,
+            numeracao_do_pneu: numPneu,
+            tipo_de_servico: servico,
+            forma_pagamento: formaPagamento,
+            qntd_de_pneu: quantidade
+
+        }
+
+
+
+
+        salvar_dados('orcamento', dados_orcamento);
+
+
+
+        navegacao.navigate('Tela_de_Confirmacao', user_id);
 
     }
+
+
+
+
+
+
+
+
 
 
 
@@ -66,12 +202,13 @@ export default function Tela_de_Orcamento(props) {
 
 
                     <BotaoVoltarAoInicio
+                        titulo={'Voltar ao inicio'}
                         acao={h_voltar} />
 
 
 
                     <CardText
-                        titulo={dados}
+                        titulo={localUser}
                         icone={'location'}
                         iconeCor={colorPretoMaisFraco}
                     />
@@ -91,6 +228,8 @@ export default function Tela_de_Orcamento(props) {
 
                     <PickerSelectServico />
 
+                    <PickerQuantidade />
+
                     <PickerSelectPagamento />
 
 
@@ -106,9 +245,8 @@ export default function Tela_de_Orcamento(props) {
 
 
 
-
                     <CardText
-                        titulo={usuario.dados.whatsapp}
+                        titulo={whatsapp_user}
                         icone={'logo-whatsapp'}
                         iconeCor={colorPretoMaisFraco}
                     />
@@ -116,7 +254,7 @@ export default function Tela_de_Orcamento(props) {
 
 
                     <CardText
-                        titulo={usuario.dados.nome}
+                        titulo={nome_user}
                         icone={'person-outline'}
                         iconeCor={colorPretoMaisFraco}
                     />

@@ -4241,6 +4241,11 @@
   dependencies:
     "function-bind" "^1.1.1"
 
+"haversine-geolocation@^1.6.0":
+  "integrity" "sha512-5s+FFOCeQJLalx/9Txyq6p8q12l1U6hKcrpyPYNLbq1mHcd9FW6sVQ32iOgKFRNfDhqjqSWZ5uP+kSF3uHc8eQ=="
+  "resolved" "https://registry.npmjs.org/haversine-geolocation/-/haversine-geolocation-1.6.0.tgz"
+  "version" "1.6.0"
+
 "hermes-engine@~0.11.0":
   "integrity" "sha512-7aMUlZja2IyLYAcZ69NBnwJAR5ZOYlSllj0oMpx08a8HzxHOys0eKCzfphrf6D0vX1JGO1QQvVsQKe6TkYherw=="
   "resolved" "https://registry.npmjs.org/hermes-engine/-/hermes-engine-0.11.0.tgz"

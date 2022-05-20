@@ -4,7 +4,7 @@ import { colorBranco, colorPretoFraco } from './../../Paleta_cores';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
-export default function BotaoVoltarAoInicio({acao}) {
+export default function BotaoVoltarAoInicio({acao, titulo}) {
 
 
 
@@ -16,7 +16,7 @@ export default function BotaoVoltarAoInicio({acao}) {
         <Ionicons name='chevron-back-outline' size={35} color={colorPretoFraco} />
       </TouchableOpacity>
 
-      <Text style={css.txtLobby}>Voltar ao incio</Text>
+      <Text style={css.txtLobby}>{titulo}</Text>
 
 
     </View>

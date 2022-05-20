@@ -1,11 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, SafeAreaView, StyleSheet, ImageBackground } from 'react-native';
 import { Button } from 'react-native-paper';
 import { colorFacebookAzul } from '../../Paleta_cores';
 import { Picker } from '@react-native-picker/picker';
 import { colorBranco, colorPretoMaisFraco } from './../../Paleta_cores';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { AuthContext } from '../Context/AuthContext';
+import { OrcamentoContext } from './../Context/OrcamentoContext';
+
 
 
 
@@ -13,9 +14,23 @@ import { AuthContext } from '../Context/AuthContext';
 export default function PickerSelect() {
 
   const [selectedLanguage, setSelectedLanguage] = useState();
-  const {get_numPneu} = useContext(AuthContext);
+  const {get_numPneu} = useContext(OrcamentoContext);
 
-  get_numPneu(selectedLanguage);
+
+
+  
+
+
+
+  useEffect(()=>{
+
+    get_numPneu(selectedLanguage);
+
+
+
+
+  }, [selectedLanguage])
+
 
 
 
@@ -42,9 +57,9 @@ export default function PickerSelect() {
 
           }>
 
-          <Picker.Item label="175 65 R14" value={'R14'} />
-          <Picker.Item label="175 65 R15" value={'R15'} />
-          <Picker.Item label="175 65 R17" value={'R17'} />
+          <Picker.Item label="175 65 R14" value={'175 65 R14'} />
+          <Picker.Item label="175 65 R15" value={'175 65 R15'} />
+          <Picker.Item label="175 65 R17" value={'175 65 R17'} />
 
         </Picker>
       </View>

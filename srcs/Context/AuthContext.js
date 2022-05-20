@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { View } from 'react-native';
+import { View, Alert } from 'react-native';
 import { initializeAppIfNecessary } from '../../FirebaseConfig';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { getFirestore, collection, getDocs, doc, setDoc, getDoc } from 'firebase/firestore';
@@ -17,10 +17,8 @@ export default function AuthProvider({ children }) {
 
     const [usuario, setUsario] = useState();
     const [loading, setLoading] = useState(false);
-    
-    const [numPneu, setNumPneu] = useState();
-    const [servico, setServico] = useState();
-    const [formaPagamento, setFormaPagamento] = useState();
+
+
 
 
 
@@ -40,13 +38,15 @@ export default function AuthProvider({ children }) {
 
 
 
+    //Recupera data do user que ja logou
 
     useEffect(() => {
 
 
+
         async function recupera_user_local() {
 
-           
+
 
             try {
                 const jsonValue = await AsyncStorage.getItem('@dadosUsuario')
@@ -63,7 +63,7 @@ export default function AuthProvider({ children }) {
                 // error reading value
             }
 
-          
+
 
         }
 
@@ -78,7 +78,7 @@ export default function AuthProvider({ children }) {
 
 
 
-
+    //function de criar conta
 
     async function criar_conta(email, password, nome, whatsapp) {
 
@@ -116,11 +116,30 @@ export default function AuthProvider({ children }) {
                     setUsario(dados_completos);
                     Para_Loading()
 
-                }).catch((x) => {
-                    alert(x);
-                    Para_Loading()
+                }).catch(error => {
 
-                })
+                    if (error.code === 'auth/email-already-in-use') {
+
+                        Alert.alert('Email em uso. Já existe uma conta com o endereço de e-mail fornecido');
+                        Para_Loading();
+
+
+                    }
+
+                    if (error.code === 'auth/invalid-email') {
+
+                        Alert.alert('Digite um e-mail real. Esse e-mail que você digitou é invalido');
+                        Para_Loading();
+
+
+                    }
+
+                    if (error.code === 'auth/weak-password') {
+                        Alert.alert('Senha Fraca. Insira uma senha maior e mais segura');
+                        Para_Loading();
+                    }
+
+                });
 
 
 
@@ -133,6 +152,8 @@ export default function AuthProvider({ children }) {
     }
 
 
+
+    //function de login
 
     async function login(email, password) {
 
@@ -154,8 +175,7 @@ export default function AuthProvider({ children }) {
 
 
                 } else {
-                    // doc.data() will be undefined in this case
-                    alert("Esse usuario é fantasma!");
+                    Alert.alert("Temos um", "Esse usuario é fantasma!");
                     Para_Loading();
 
                 }
@@ -165,9 +185,36 @@ export default function AuthProvider({ children }) {
 
 
 
-            }).catch((error) => {
-                alert(error);
-                Para_Loading();
+            }).catch(error => {
+
+                if (error.code === 'auth/invalid-email') {
+
+                    Alert.alert('Erro ao logar', 'Digite um e-mail real. Esse e-mail que você digitou é invalido');
+                    Para_Loading();
+
+                }
+
+
+                if (error.code === 'auth/user-disabled') {
+
+                    Alert.alert('Error ao entrar','Usuário bloqueado. Usuário correspondente ao e-mail fornecido foi desabilitado');
+                    Para_Loading();
+
+                }
+
+
+                if (error.code === 'auth/user-not-found') {
+                    //nenhum usuario encontrado 
+                    Alert.alert('Error ao entrar','Usuário não foi encontrado');
+                    Para_Loading();
+
+                }
+
+                if (error.code === 'auth/wrong-password') {
+
+                      Alert.alert('Error ao entrar','Senha incorreta');
+                      Para_Loading();
+                }
 
             })
 
@@ -175,6 +222,8 @@ export default function AuthProvider({ children }) {
 
 
 
+
+    //function de salvar data do user localmente
 
     const Salvar_data_local = async (value) => {
         try {
@@ -186,34 +235,20 @@ export default function AuthProvider({ children }) {
     }
 
 
+
+    //function de remover data do user localmente
+
     const removeData = async () => {
         await AsyncStorage.removeItem('@dadosUsuario');
     }
 
 
 
-    function get_numPneu(value){
-        setNumPneu(value); 
-    }
-
-
-
-    function get_servico(value){
-        setServico(value);
-
-    }
-
-
-
-    function get_formaPagamento(value){
-        setFormaPagamento(value);
-    }
-
 
 
 
     return (
-        <AuthContext.Provider value={{ verifica_user_logado: !!usuario, usuario, criar_conta, login, loading, get_numPneu, get_servico, get_formaPagamento, numPneu, servico, formaPagamento }}>
+        <AuthContext.Provider value={{ verifica_user_logado: !!usuario, usuario, criar_conta, login, loading }}>
             {children}
         </AuthContext.Provider>
     )

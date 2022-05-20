@@ -2,15 +2,12 @@ import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, SafeAreaView, StyleSheet, ImageBackground, ScrollView, StatusBar, Dimensions, TextInput } from 'react-native';
 import BotaoVoltarAoInicio from './../Componentes/BotaoVoltarAoInicio';
 import { useNavigation } from '@react-navigation/native';
-import CardInput from './../Componentes/CardInput';
 import CardText from '../Componentes/CardText';
 import { colorFacebookAzul, colorPretoMaisFraco, colorBranco } from './../../Paleta_cores';
-import CardInputForm from '../Componentes/CardInputForm';
-import PickerSelect from './../Componentes/PickerSelect';
-import PickerSelectServico from '../Componentes/PickerSelectServico';
-import PickerSelectPagamento from '../Componentes/PickerSelectPagamento';
 import BotaoAzul from './../Componentes/BotaoAzul';
-import { AuthContext } from '../Context/AuthContext';
+import { nomeFix } from './../../LocationFix';
+import { FirebaseContext } from './../Context/FirebaseContext';
+
 
 
 
@@ -19,18 +16,65 @@ import { AuthContext } from '../Context/AuthContext';
 
 export default function Tela_de_Confirmacao(props) {
 
+
+
+
+
+    //CONST
+    const { recuperar_dados_atributos_personalizados } = useContext(FirebaseContext);
+    const user_id = props.route.params
     const navegacao = useNavigation();
-    const dados = props.route.params
-
-  
 
 
+
+
+
+
+
+
+
+
+
+    //LETS
+    console.log(user_id);
+
+
+
+
+
+
+
+
+
+    //USEEFFECTS
+
+    useEffect(() => {
+
+        recuperar_dados_atributos_personalizados("orcamento", "user_id",user_id);
+        
+
+
+    }, [])
+
+
+
+
+
+
+
+
+
+    //FUNCS
 
     function h_tela_de_orcamento() {
 
         navegacao.navigate('Tela_de_Orcamento');
 
     }
+
+
+
+
 
 
 
@@ -46,22 +90,23 @@ export default function Tela_de_Confirmacao(props) {
 
 
                     <BotaoVoltarAoInicio
+                        titulo={'Voltar'}
                         acao={h_tela_de_orcamento} />
 
 
+                    <CardText
+                        titulo={nomeFix}
+                        icone={'location'}
+                        iconeCor={"#ff0000"}
+                    />
 
                     <CardText
-                        titulo={'dados fixo'}
+                        titulo={'Local_atual_user'}
                         icone={'location'}
                         iconeCor={colorPretoMaisFraco}
                     />
 
 
-                    <CardText
-                        titulo={dados.dados}
-                        icone={'location'}
-                        iconeCor={"#ff0000"}
-                    />
 
 
                     <BotaoAzul

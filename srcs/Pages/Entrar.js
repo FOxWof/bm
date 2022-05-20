@@ -66,7 +66,7 @@ export default function Entrar() {
 
         <ScrollView>
 
-          <BotaoVoltarAoInicio acao={voltarAoLobby} />
+          <BotaoVoltarAoInicio  titulo={'Voltar ao inicio'} acao={voltarAoLobby} />
 
           <CardInput
             titulo={'Email'}

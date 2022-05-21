@@ -17,7 +17,7 @@ export default function FirebaseProvider({ children }) {
     const db = getFirestore();
 
 
-    const [localizacaoUserRecuperada, setLocalizacaoUserRecuperada] = useState();
+    const [valorRecuperadoGetWithId, setValorRecuperadoGetWithId] = useState();
 
 
 
@@ -70,7 +70,7 @@ export default function FirebaseProvider({ children }) {
 
         if (docRecuperado.exists()) {
 
-            setLocalizacaoUserRecuperada(docRecuperado.data());
+            setValorRecuperadoGetWithId(docRecuperado.data());
 
 
         }
@@ -123,7 +123,7 @@ export default function FirebaseProvider({ children }) {
 
 
     return (
-        <FirebaseContext.Provider value={{ salvar_dados_comId_noDoc, recupera_dados_comId_noDoc, salvar_dados, recuperar_todos_dados_colecao, recuperar_dados_atributos_personalizados, localizacaoUserRecuperada }}>
+        <FirebaseContext.Provider value={{ salvar_dados_comId_noDoc, recupera_dados_comId_noDoc, salvar_dados, recuperar_todos_dados_colecao, recuperar_dados_atributos_personalizados, valorRecuperadoGetWithId }}>
             {children}
         </FirebaseContext.Provider>
     )

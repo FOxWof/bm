@@ -21,22 +21,19 @@ export default function Tela_de_Confirmacao(props) {
 
 
     //CONST
-    const { recuperar_dados_atributos_personalizados } = useContext(FirebaseContext);
-    const user_id = props.route.params
+
+    const dados_orcamento_props = props.route.params
     const navegacao = useNavigation();
 
+    const user_id = dados_orcamento_props.user_id;
+    const { recupera_dados_comId_noDoc, valorRecuperadoGetWithId } = useContext(FirebaseContext);
+    const [dadosOrcamento, setDadosOrcamento] = useState([]);
 
 
 
 
 
 
-
-
-
-
-    //LETS
-    console.log(user_id);
 
 
 
@@ -50,11 +47,148 @@ export default function Tela_de_Confirmacao(props) {
 
     useEffect(() => {
 
-        recuperar_dados_atributos_personalizados("orcamento", "user_id",user_id);
-        
+        recupera_dados_comId_noDoc("orcamento", user_id);
+
 
 
     }, [])
+
+
+
+    useEffect(() => {
+
+        if (valorRecuperadoGetWithId != undefined || valorRecuperadoGetWithId != null) {
+            setDadosOrcamento(valorRecuperadoGetWithId);
+
+        }
+
+
+    }, []);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //LETS
+
+    //let Local_user = valorRecuperadoGetWithId.documento.dados_Confirmacao.dados.localUserAtual;
+
+    let valor_deslocamento = dados_orcamento_props.dados_Confirmacao.dados.distPrice.valorDeslocamento;
+
+
+    let veiculo = dados_orcamento_props.dados_Confirmacao.detalhes_orcamento.veiculo;
+    let numeracao_pneu = dados_orcamento_props.numeracao_do_pneu;
+    let qnt_pneu = dados_orcamento_props.qntd_de_pneu;
+    let tipo_servico = dados_orcamento_props.tipo_de_servico;
+    let forma_pagamento = dados_orcamento_props.forma_pagamento;
+
+
+    let valor_servio = 0;
+    let Valor_total = 0;
+
+    let tipo_servico_string = '';
+    let forma_pagamento_string = '';
+
+
+
+
+    if (dadosOrcamento !== undefined || dadosOrcamento !== null) {
+
+
+
+
+        if (numeracao_pneu == '175 65 R14') {
+
+            valor_servio = 25 * qnt_pneu
+
+        } else if (numeracao_pneu == '175 65 R15') {
+
+            valor_servio = 25 * qnt_pneu
+
+        } else if (numeracao_pneu == '175 65 R17') {
+
+            valor_servio = 30 * qnt_pneu
+
+        }
+
+
+
+
+        if (tipo_servico == 1) {
+
+            tipo_servico_string = 'Calibragem';
+
+
+        } else if (tipo_servico == 2) {
+            tipo_servico_string = 'Conserto de pneu';
+
+        } else if (tipo_servico == 3) {
+            tipo_servico_string = 'Troca de pneu';
+
+        } else if (tipo_servico == 4) {
+            tipo_servico_string = 'Vulcanizão(fria ou quente)';
+
+        }
+
+
+
+
+
+
+        if (forma_pagamento == 1) {
+
+            forma_pagamento_string = 'Dinheiro';
+
+
+        } else if (forma_pagamento == 2) {
+            forma_pagamento_string = 'Pix';
+
+        } else if (forma_pagamento == 3) {
+            forma_pagamento_string = 'Cartão de débito';
+
+        } else if (forma_pagamento == 4) {
+            forma_pagamento_string = 'Cartão de crédito';
+
+        }
+
+
+
+        Valor_total = valor_servio + valor_deslocamento;
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -71,6 +205,15 @@ export default function Tela_de_Confirmacao(props) {
         navegacao.navigate('Tela_de_Orcamento');
 
     }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -101,10 +244,94 @@ export default function Tela_de_Confirmacao(props) {
                     />
 
                     <CardText
-                        titulo={'Local_atual_user'}
+                        titulo={'Local_user'}
                         icone={'location'}
                         iconeCor={colorPretoMaisFraco}
                     />
+
+
+
+
+
+                    <CardText
+                        titulo={`Deslocamento R$ ${valor_deslocamento}`}
+                        icone={'card-outline'}
+                        iconeCor={colorPretoMaisFraco}
+                    />
+
+
+
+                    <CardText
+                        titulo={`Serviço R$ ${valor_servio.toFixed(0)},00`}
+                        icone={'card-outline'}
+                        iconeCor={colorPretoMaisFraco}
+                    />
+
+
+
+                    <CardText
+                        titulo={`TOTAL R$ ${Valor_total.toFixed(0)},00`}
+                        icone={'card-outline'}
+                        iconeCor={colorPretoMaisFraco}
+                    />
+
+
+
+
+
+
+
+
+
+
+                    <CardText
+                        titulo={veiculo}
+                        icone={'car-outline'}
+                        iconeCor={colorPretoMaisFraco}
+                    />
+
+
+
+
+                    <CardText
+                        titulo={`Numeração do pneu ${numeracao_pneu}`}
+                        icone={'car-outline'}
+                        iconeCor={colorPretoMaisFraco}
+                    />
+
+
+
+
+                    <CardText
+                        titulo={`Serviço em ${qnt_pneu} pneus`}
+                        icone={'car-outline'}
+                        iconeCor={colorPretoMaisFraco}
+                    />
+
+
+
+
+
+                    <CardText
+                        titulo={`${tipo_servico_string}`}
+                        icone={'construct-outline'}
+                        iconeCor={colorPretoMaisFraco}
+                    />
+
+
+
+
+                    <CardText
+                        titulo={`${forma_pagamento_string}`}
+                        icone={'card-outline'}
+                        iconeCor={colorPretoMaisFraco}
+                    />
+
+
+
+
+
+
 
 
 

@@ -36,7 +36,7 @@ export default function PickerQuantidade() {
       <View style={css.headerCard}>
 
 
-        <Ionicons name={'card-outline'} color={colorPretoMaisFraco} size={24} />
+        <Ionicons name={'car-outline'} color={colorPretoMaisFraco} size={24} />
         <Text style={css.fontCard}>{'Serviço em quantos pneus'}</Text>
 
 

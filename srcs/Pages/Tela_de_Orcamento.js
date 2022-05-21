@@ -30,7 +30,7 @@ export default function Tela_de_Orcamento(props) {
 
     const { usuario } = useContext(AuthContext);
     const { numPneu, servico, formaPagamento, quantidade } = useContext(OrcamentoContext);
-    const { localizacaoUserRecuperada, recupera_dados_comId_noDoc, salvar_dados } = useContext(FirebaseContext);
+    const { valorRecuperadoGetWithId, recupera_dados_comId_noDoc, salvar_dados, salvar_dados_comId_noDoc } = useContext(FirebaseContext);
 
 
 
@@ -103,16 +103,16 @@ export default function Tela_de_Orcamento(props) {
 
     useEffect(() => {
 
-        if (localizacaoUserRecuperada == undefined) {
+        if (valorRecuperadoGetWithId == undefined) {
 
             setLocalUser('Carregando...');
 
 
         } else {
-            setLocalUser(localizacaoUserRecuperada.documento.address);
+            setLocalUser(valorRecuperadoGetWithId.documento.address);
         }
 
-    }, [localizacaoUserRecuperada])
+    }, [valorRecuperadoGetWithId])
 
 
 
@@ -174,11 +174,11 @@ export default function Tela_de_Orcamento(props) {
 
 
 
-        salvar_dados('orcamento', dados_orcamento);
+        salvar_dados_comId_noDoc('orcamento', dados_orcamento, user_id);
 
 
 
-        navegacao.navigate('Tela_de_Confirmacao', user_id);
+        navegacao.navigate('Tela_de_Confirmacao', dados_orcamento);
 
     }
 

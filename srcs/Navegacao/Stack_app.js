@@ -7,6 +7,10 @@ import Tela_de_Confirmacao from '../Pages/Tela_de_Confirmacao';
 import Conclusao from '../Pages/Conclusao';
 import MeusAtendimentos from '../Pages/User/MeusAtendimentos';
 import Infos from '../Pages/User/Infos';
+import Notificacoes from '../Pages/User/Notificacoes';
+
+
+
 
 
 export default function Stack_app() {
@@ -28,6 +32,8 @@ export default function Stack_app() {
          <stack.Screen name='Conclusao' component={Conclusao}/> 
          <stack.Screen name='MeusAtendimentos' component={MeusAtendimentos}/> 
          <stack.Screen name='Infos' component={Infos}/> 
+         <stack.Screen name='Notificacoes' component={Notificacoes}/> 
+
 
 
 

@@ -199,8 +199,7 @@ export default function Tela_de_Confirmacao(props) {
             let docatt = {
                 doc,
                 valor_servio,
-                Valor_total,
-                status: 0
+                Valor_total, 
             }
 
 

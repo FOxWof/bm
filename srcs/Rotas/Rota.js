@@ -10,7 +10,8 @@ export default function Rota() {
 
   const { verifica_user_logado } = useContext(AuthContext);
 
+
   return (
-    verifica_user_logado ? <Rota_app/> : <Rota_auth />
+    verifica_user_logado ? <Rota_app /> : <Rota_auth />
   );
 }

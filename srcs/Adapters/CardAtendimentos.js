@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import TxtTitulo from './TxtTitulo';
+import TxtTitulo from '../Componentes/TxtTitulo'
 import { colorPretoMaisFraco } from '../../Paleta_cores';
 import { format, formatDistance, formatRelative, subDays } from 'date-fns'
 
@@ -66,7 +66,7 @@ export default function CardAtendimentos(data) {
     valor_deslocamento = data.data.documento.doc.dados_Confirmacao.dados.distPrice.valorDeslocamento;
     valor_total = data.data.documento.Valor_total;
 
-    status = data.data.documento.status;
+    status = data.data.status;
 
 
     

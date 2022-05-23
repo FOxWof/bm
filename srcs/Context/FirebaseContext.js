@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { initializeAppIfNecessary } from './../../FirebaseConfig';
-import { getFirestore, collection, getDocs, doc, setDoc, getDoc, addDoc, query, where, deleteDoc, orderBy, onSnapshot } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, doc, setDoc, getDoc, addDoc,updateDoc , query, where, deleteDoc, orderBy, onSnapshot } from 'firebase/firestore';
 import { Alert } from 'react-native';
 
 
@@ -20,6 +20,26 @@ export default function FirebaseProvider({ children }) {
     const [valorRecuperadoGetWithId, setValorRecuperadoGetWithId] = useState();
     const [dadosRecuperados, setDadosRecuperados] = useState([]);
     const [listaDados, setListaDados] = useState([]);
+    const [dadosData, setDadosData] = useState([]);
+
+
+
+
+
+
+    //Atuaizar um documento 
+
+    async function atualiza_documento(tituloDocumento, doc_id, valor){
+
+        const refDocUpdate = doc(db, tituloDocumento, doc_id);
+
+        await updateDoc(refDocUpdate, {
+            status: valor
+          });
+
+    }
+
+
 
 
 
@@ -38,7 +58,8 @@ export default function FirebaseProvider({ children }) {
 
             documento,
             id,
-            data: new Date()
+            data: new Date(),
+            status: 0
 
         }).catch((x) => {
 
@@ -119,12 +140,12 @@ export default function FirebaseProvider({ children }) {
 
     //Recuperar documentos em uma coleção com atributos personalizados com o where
 
-    async function recuperar_dados_atributos_personalizados(tituloDocumento, atributo_db, atributo_user) {
+    async function recuperar_dados_atributos_personalizados(tituloDocumento, atributo_db, atributo_user, ordem) {
 
 
 
 
-        const q = query(collection(db, tituloDocumento), where(atributo_db, "==", atributo_user), orderBy('data', 'desc'));
+        const q = query(collection(db, tituloDocumento), where(atributo_db, "==", atributo_user), orderBy('data', ordem));
         const querySnapshot = onSnapshot(q, (querySnap) => {
 
             const lista = ([]);
@@ -139,6 +160,56 @@ export default function FirebaseProvider({ children }) {
   
 
             setListaDados(lista);
+
+
+
+        });
+
+
+
+    }
+
+
+
+
+    function limparQuery(){
+
+        setListaDados([])
+        
+    }
+
+
+
+
+
+
+
+
+
+
+    
+    //Recuperar documentos em uma coleção com atributos personalizados com o where
+
+    async function recuperar_dados_pela_data(tituloDocumento) {
+
+
+
+
+        const q = query(collection(db, tituloDocumento), orderBy('data', 'asc'));
+        const querySnapshot = onSnapshot(q, (querySnap) => {
+
+            const lista = ([]);
+
+            querySnap.forEach(doc => {
+
+                lista.push({
+                    ...doc.data(),
+                    id: doc.id
+                });
+            });
+  
+
+            setDadosData(lista);
 
 
 
@@ -179,10 +250,14 @@ export default function FirebaseProvider({ children }) {
             recupera_dados_comId_noDoc,
             salvar_dados, recuperar_todos_dados_colecao,
             recuperar_dados_atributos_personalizados,
+            recuperar_dados_pela_data,
             deletar_documento,
+            dadosData,
             valorRecuperadoGetWithId,
             dadosRecuperados,
-            listaDados
+            listaDados,
+            limparQuery,
+            atualiza_documento
         }}>
 
             {children}

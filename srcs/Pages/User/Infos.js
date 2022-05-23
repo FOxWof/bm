@@ -26,7 +26,7 @@ export default function Infos() {
 
         <BotaoVoltarAoInicio
           acao={handler_voltar}
-          titulo={'Voltar'}
+          titulo={'Voltar ao inicio'}
         />
 
       </View>

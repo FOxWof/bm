@@ -118,7 +118,8 @@ export default function AuthProvider({ children }) {
 
                 await setDoc(doc(db, "usuarios", user_id), {
                     tipo: 0,
-                    dados
+                    dados,
+                    data: new Date()
 
                 }).then(() => {
 

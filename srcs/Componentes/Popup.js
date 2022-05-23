@@ -3,7 +3,6 @@ import { View, StyleSheet, Modal, Image, Text, TouchableOpacity, Alert, StatusBa
 import { colorBranco, colorBrancoFosco, colorCardOptions, colorPretoFraco } from '../../Paleta_cores';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { StackActions, useNavigation } from '@react-navigation/native';
-import BotaoBranco from './BotaoBranco';
 import { AuthContext } from '../Context/AuthContext';
 
 
@@ -90,7 +89,7 @@ export default function PopUp({ visible, onDismiss, nomeCliente }) {
                     <View style={css.espacamento} />
 
 
-                    <TouchableOpacity onPress={() => IrParar('MeusAtendimentos')} style={css.CardBotao}>
+                    <TouchableOpacity onPress={() => IrParar('Notificacoes')} style={css.CardBotao}>
 
                         <Ionicons style={css.icon} name='notifications-outline' size={20} />
 
@@ -116,7 +115,7 @@ export default function PopUp({ visible, onDismiss, nomeCliente }) {
 
                     <View style={css.espacamento} />
 
- 
+
 
 
 

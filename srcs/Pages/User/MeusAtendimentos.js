@@ -6,7 +6,7 @@ import { useNavigation, StackActions } from '@react-navigation/native';
 import { FirebaseContext } from '../../Context/FirebaseContext';
 import { AuthContext } from '../../Context/AuthContext';
 import BotaoBranco from '../../Componentes/BotaoBranco';
-import CardAtendimentos from '../../Componentes/CardAtendimentos';
+import CardAtendimentos from '../../Adapters/CardAtendimentos';
 
 
 
@@ -50,7 +50,7 @@ export default function MeusAtendimentos() {
 
   useEffect(() => {
 
-    recuperar_dados_atributos_personalizados('atendimentos', "id", user_id);
+    recuperar_dados_atributos_personalizados('atendimentos', "id", user_id, "desc");
 
 
   }, [])

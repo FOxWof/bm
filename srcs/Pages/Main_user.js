@@ -1,13 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, SafeAreaView, StyleSheet, ImageBackground, ScrollView, StatusBar, Dimensions, TextInput } from 'react-native';
+import { View, Text, SafeAreaView, StyleSheet, ImageBackground, ScrollView, ToastAndroid, Alert, StatusBar, Dimensions, BackHandler, TextInput } from 'react-native';
 import * as Location from 'expo-location';
 import MapView, { Callout } from 'react-native-maps';
 import BotaoOrçamento from '../Componentes/BotaoOrçamento';
-import { useNavigation } from '@react-navigation/native';
+import { StackActions, useNavigation } from '@react-navigation/native';
 import { getDistance, getPreciseDistance } from 'geolib';
 import { longitudeFix, latitudeFix } from '../../LocationFix';
 import { AuthContext } from '../Context/AuthContext';
+import { OrcamentoContext } from '../Context/OrcamentoContext';
 import { FirebaseContext } from './../Context/FirebaseContext';
+import { colorFacebookAzul } from '../../Paleta_cores';
+import Fab from '../Componentes/Fab';
+import { Button, Menu, Divider, Provider } from 'react-native-paper';
+import PopUp from '../Componentes/Popup';
 
 
 
@@ -24,17 +29,22 @@ export default function Main_user() {
   const [distPrice, setDistPrice] = useState();
 
   const { usuario } = useContext(AuthContext);
-  const { salvar_dados_comId_noDoc } = useContext(FirebaseContext)
+  const { salvar_dados_comId_noDoc } = useContext(FirebaseContext);
+  const { recebe_localizacao_atual, recebe_preco_deslocamento } = useContext(OrcamentoContext);
+
+
+  const [isvisible, setVisible] = useState(false);
+
+  const openMenu = () => setVisible(true);
+
+  const closeMenu = () => setVisible(false);
 
 
 
 
 
 
-  let user_id = usuario.dados.user_id;
-  let text = 'Aguarde..';
-
-
+  //USEEFFECTS
 
 
   useEffect(() => {
@@ -70,6 +80,8 @@ export default function Main_user() {
 
           let address = `${item.district}, ${item.street}, ${item.streetNumber}`;
           setLocalUserAtual(address);
+          recebe_localizacao_atual(address);
+
 
           let dados_localizacao_atual_usuario = {
             latitude,
@@ -78,7 +90,7 @@ export default function Main_user() {
 
           }
 
-          salvar_dados_comId_noDoc( 'localizacao_atual' ,dados_localizacao_atual_usuario, user_id );
+          salvar_dados_comId_noDoc('localizacao_atual', dados_localizacao_atual_usuario, user_id);
 
 
 
@@ -108,6 +120,7 @@ export default function Main_user() {
 
 
         setDistPrice(dist_and_price);
+        recebe_preco_deslocamento(dist_and_price);
 
 
 
@@ -129,10 +142,51 @@ export default function Main_user() {
 
 
 
+
+
+
+
+  //LETS
+
+  let user_id = usuario.dados.user_id;
+  let nome_cliente = usuario.dados.nome;
+
+  let text = 'Aguarde..';
+
+
+
+
+
+
+
+
+
+
+  //FUNCS
+
   function h_orcamento() {
     navegacao.navigate('Tela_de_Orcamento', { localUserAtual, distPrice });
 
   }
+
+
+
+
+
+
+
+
+  function abreMenu() {
+    navegacao.navigate('MeusAtendimentos');
+
+  }
+
+
+
+
+
+
+
 
 
 
@@ -142,6 +196,7 @@ export default function Main_user() {
       <StatusBar hidden={true} />
       <View>
 
+        <PopUp nomeCliente={nome_cliente} onDismiss={closeMenu} visible={isvisible} />
 
         <MapView
           style={css.map}
@@ -150,6 +205,15 @@ export default function Main_user() {
           zoomEnabled={true}
         >
         </MapView>
+
+
+        <Fab
+          icone={'menu'}
+          acao={openMenu}
+          colorBG={colorFacebookAzul}
+        />
+
+
 
 
 

@@ -15,7 +15,7 @@ import { OrcamentoContext } from './../Context/OrcamentoContext';
 
 export default function PickerSelectServico() {
 
-  const [selectedLanguage, setSelectedLanguage] = useState();
+  const [selectedLanguage, setSelectedLanguage] = useState(1);
   const {get_servico} = useContext(OrcamentoContext);
 
 

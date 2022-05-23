@@ -1,12 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, SafeAreaView, StyleSheet, ImageBackground, ScrollView, StatusBar, Dimensions, TextInput } from 'react-native';
 import BotaoVoltarAoInicio from './../Componentes/BotaoVoltarAoInicio';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, StackActions } from '@react-navigation/native';
 import CardText from '../Componentes/CardText';
-import { colorFacebookAzul, colorPretoMaisFraco, colorBranco } from './../../Paleta_cores';
+import { colorFacebookAzul, colorPretoMaisFraco, colorBranco, colorBrancoFosco } from './../../Paleta_cores';
 import BotaoAzul from './../Componentes/BotaoAzul';
 import { nomeFix } from './../../LocationFix';
 import { FirebaseContext } from './../Context/FirebaseContext';
+import { OrcamentoContext } from '../Context/OrcamentoContext';
+import ExpandableCard from 'react-native-expandable-card';
+import BotaoBranco from './../Componentes/BotaoBranco';
+
+
 
 
 
@@ -26,14 +31,10 @@ export default function Tela_de_Confirmacao(props) {
     const navegacao = useNavigation();
 
     const user_id = dados_orcamento_props.user_id;
-    const { recupera_dados_comId_noDoc, valorRecuperadoGetWithId } = useContext(FirebaseContext);
+    const { recupera_dados_comId_noDoc, valorRecuperadoGetWithId, salvar_dados, deletar_documento } = useContext(FirebaseContext);
+    const { localizacaoAtualUser, precoDeslocamento } = useContext(OrcamentoContext)
     const [dadosOrcamento, setDadosOrcamento] = useState([]);
-
-
-
-
-
-
+    const [doc, setDoc] = useState([]);
 
 
 
@@ -45,36 +46,15 @@ export default function Tela_de_Confirmacao(props) {
 
     //USEEFFECTS
 
-    useEffect(() => {
-
-        recupera_dados_comId_noDoc("orcamento", user_id);
-
-
-
-    }, [])
 
 
 
     useEffect(() => {
 
-        if (valorRecuperadoGetWithId != undefined || valorRecuperadoGetWithId != null) {
-            setDadosOrcamento(valorRecuperadoGetWithId);
-
-        }
+        setDoc(dados_orcamento_props);
 
 
-    }, []);
-
-
-
-
-
-
-
-
-
-
-
+    }, [dados_orcamento_props]);
 
 
 
@@ -85,10 +65,7 @@ export default function Tela_de_Confirmacao(props) {
 
 
     //LETS
-
-    //let Local_user = valorRecuperadoGetWithId.documento.dados_Confirmacao.dados.localUserAtual;
-
-    let valor_deslocamento = dados_orcamento_props.dados_Confirmacao.dados.distPrice.valorDeslocamento;
+    let valor_deslocamento = precoDeslocamento.valorDeslocamento;
 
 
     let veiculo = dados_orcamento_props.dados_Confirmacao.detalhes_orcamento.veiculo;
@@ -108,7 +85,6 @@ export default function Tela_de_Confirmacao(props) {
 
 
     if (dadosOrcamento !== undefined || dadosOrcamento !== null) {
-
 
 
 
@@ -168,6 +144,7 @@ export default function Tela_de_Confirmacao(props) {
 
 
 
+
         Valor_total = valor_servio + valor_deslocamento;
 
 
@@ -214,6 +191,47 @@ export default function Tela_de_Confirmacao(props) {
 
 
 
+    function GeraAtendimento() {
+
+
+        if (doc != null || doc != []) {
+
+            let docatt = {
+                doc,
+                valor_servio,
+                Valor_total,
+                status: 0
+            }
+
+
+            salvar_dados("atendimentos", docatt, user_id);
+
+            deletar_documento("orcamento", user_id);
+            
+            navegacao.dispatch(StackActions.replace('Conclusao'));
+
+        }
+
+
+
+
+    }
+
+
+
+    function DeletarOrcamento() {
+        deletar_documento("orcamento", user_id);
+        navegacao.dispatch(StackActions.replace('Inicio'));
+
+    }
+
+
+
+
+
+
+
+
 
 
 
@@ -244,7 +262,7 @@ export default function Tela_de_Confirmacao(props) {
                     />
 
                     <CardText
-                        titulo={'Local_user'}
+                        titulo={localizacaoAtualUser}
                         icone={'location'}
                         iconeCor={colorPretoMaisFraco}
                     />
@@ -254,7 +272,7 @@ export default function Tela_de_Confirmacao(props) {
 
 
                     <CardText
-                        titulo={`Deslocamento R$ ${valor_deslocamento}`}
+                        titulo={`Deslocamento R$ ${valor_deslocamento.toFixed(0)},00`}
                         icone={'card-outline'}
                         iconeCor={colorPretoMaisFraco}
                     />
@@ -270,41 +288,15 @@ export default function Tela_de_Confirmacao(props) {
 
 
                     <CardText
-                        titulo={`TOTAL R$ ${Valor_total.toFixed(0)},00`}
+                        titulo={`Total R$ ${Valor_total.toFixed(0)},00`}
                         icone={'card-outline'}
                         iconeCor={colorPretoMaisFraco}
                     />
 
 
-
-
-
-
-
-
-
-
                     <CardText
-                        titulo={veiculo}
-                        icone={'car-outline'}
-                        iconeCor={colorPretoMaisFraco}
-                    />
-
-
-
-
-                    <CardText
-                        titulo={`Numeração do pneu ${numeracao_pneu}`}
-                        icone={'car-outline'}
-                        iconeCor={colorPretoMaisFraco}
-                    />
-
-
-
-
-                    <CardText
-                        titulo={`Serviço em ${qnt_pneu} pneus`}
-                        icone={'car-outline'}
+                        titulo={'Lembrando quê, esse valor poderá sofrer alterações se houver mudanças durante o serviço.'}
+                        icone={'alert-outline'}
                         iconeCor={colorPretoMaisFraco}
                     />
 
@@ -312,22 +304,30 @@ export default function Tela_de_Confirmacao(props) {
 
 
 
-                    <CardText
-                        titulo={`${tipo_servico_string}`}
-                        icone={'construct-outline'}
-                        iconeCor={colorPretoMaisFraco}
+
+
+
+
+
+                    <ExpandableCard
+                        collapsedCardItems={[
+                            { label: 'Detalhes', value: 'ver mais' },
+                        ]}
+                        expandedCardItems={[
+                            { label: 'Veiculo', value: veiculo },
+                            { label: 'Serviço', value: tipo_servico_string },
+                            { label: 'Numeração do pneu', value: numeracao_pneu },
+                            { label: 'Quantidade de pneus', value: qnt_pneu },
+                            { label: 'Forma de pagamento', value: forma_pagamento_string }
+
+                        ]}
+                        style={{ backgroundColor: colorBrancoFosco, marginHorizontal: 10, marginTop: 30 }}
+                        labelStyle={{ fontSize: 16 }}
+                        valueStyle={{ fontSize: 15, fontWeight: 'bold' }}
+                        useNativeDriver={true}
+
+
                     />
-
-
-
-
-                    <CardText
-                        titulo={`${forma_pagamento_string}`}
-                        icone={'card-outline'}
-                        iconeCor={colorPretoMaisFraco}
-                    />
-
-
 
 
 
@@ -337,7 +337,12 @@ export default function Tela_de_Confirmacao(props) {
 
 
                     <BotaoAzul
+                        acao={GeraAtendimento}
                         titulo={'Confirmar atendimento'} />
+
+                    <BotaoBranco
+                        acao={DeletarOrcamento}
+                        titulo={'Cancelar orçamento'} />
 
 
 

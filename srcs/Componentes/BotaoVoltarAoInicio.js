@@ -30,14 +30,14 @@ export default function BotaoVoltarAoInicio({acao, titulo}) {
 const css = StyleSheet.create({
 
   container_header: {
-     marginBottom: 35, 
+     marginBottom: 30, 
      alignItems: 'center', 
      flexDirection: 'row', 
      marginTop: 15,   },
 
 
     txtLobby: {
-      fontSize: 20,
+      fontSize: 18,
       fontWeight: 'bold',
       color: colorPretoFraco,
       marginLeft: 15

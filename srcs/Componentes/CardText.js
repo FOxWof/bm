@@ -33,11 +33,12 @@ export default function CardText({titulo, hint, icone, iconeCor}) {
 const css = StyleSheet.create({
  
 
-    cardInput: {
-        height: 70,
+    cardInput: { 
         backgroundColor: colorBranco,
         borderRadius: 20, 
-        marginBottom: 5
+        marginBottom: 5,
+        paddingBottom: 10,
+    
 
     },
 

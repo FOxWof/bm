@@ -13,7 +13,7 @@ import { OrcamentoContext } from './../Context/OrcamentoContext';
 
 export default function PickerSelect() {
 
-  const [selectedLanguage, setSelectedLanguage] = useState();
+  const [selectedLanguage, setSelectedLanguage] = useState('175 65 R14');
   const {get_numPneu} = useContext(OrcamentoContext);
 
 

@@ -29,14 +29,13 @@ export default function Tela_de_Orcamento(props) {
     const dados = props.route.params
 
     const { usuario } = useContext(AuthContext);
-    const { numPneu, servico, formaPagamento, quantidade } = useContext(OrcamentoContext);
+    const { numPneu, servico, formaPagamento, quantidade,  localizacaoAtualUser} = useContext(OrcamentoContext);
     const { valorRecuperadoGetWithId, recupera_dados_comId_noDoc, salvar_dados, salvar_dados_comId_noDoc } = useContext(FirebaseContext);
 
 
 
     const [veiculo, setVeiculo] = useState('');
-    const [obs, setObs] = useState('');
-    const [localUser, setLocalUser] = useState();
+    const [obs, setObs] = useState(''); 
 
 
 
@@ -88,34 +87,7 @@ export default function Tela_de_Orcamento(props) {
 
 
     //USEEFFECTS
-
-
-
-    useEffect(() => {
-
-        recupera_dados_comId_noDoc('localizacao_atual', user_id);
-
-    }, [])
-
-
-
-
-
-    useEffect(() => {
-
-        if (valorRecuperadoGetWithId == undefined) {
-
-            setLocalUser('Carregando...');
-
-
-        } else {
-            setLocalUser(valorRecuperadoGetWithId.documento.address);
-        }
-
-    }, [valorRecuperadoGetWithId])
-
-
-
+ 
 
 
 
@@ -208,7 +180,7 @@ export default function Tela_de_Orcamento(props) {
 
 
                     <CardText
-                        titulo={localUser}
+                        titulo={localizacaoAtualUser}
                         icone={'location'}
                         iconeCor={colorPretoMaisFraco}
                     />

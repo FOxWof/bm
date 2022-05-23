@@ -27,6 +27,10 @@ export default function AuthProvider({ children }) {
 
 
 
+
+
+
+
     const Para_Loading = () => {
         setLoading(false);
     }
@@ -34,6 +38,12 @@ export default function AuthProvider({ children }) {
     const Iniciar_Loading = () => {
         setLoading(true);
     }
+
+
+
+
+
+
 
 
 
@@ -245,10 +255,22 @@ export default function AuthProvider({ children }) {
 
 
 
+    async function deslogar(){
+        auth.signOut();
+        await AsyncStorage.clear().then(()=>{
+            setUsario(null);
+        })
+    }
+
+
+
+
+
+
 
 
     return (
-        <AuthContext.Provider value={{ verifica_user_logado: !!usuario, usuario, criar_conta, login, loading }}>
+        <AuthContext.Provider value={{ verifica_user_logado: !!usuario, usuario, criar_conta, login, loading , deslogar}}>
             {children}
         </AuthContext.Provider>
     )

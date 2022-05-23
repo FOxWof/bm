@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { initializeAppIfNecessary } from './../../FirebaseConfig';
-import { getFirestore, collection, getDocs, doc, setDoc, getDoc, addDoc, query, where } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, doc, setDoc, getDoc, addDoc, query, where, deleteDoc, orderBy, onSnapshot } from 'firebase/firestore';
 import { Alert } from 'react-native';
 
 
@@ -18,17 +18,27 @@ export default function FirebaseProvider({ children }) {
 
 
     const [valorRecuperadoGetWithId, setValorRecuperadoGetWithId] = useState();
+    const [dadosRecuperados, setDadosRecuperados] = useState([]);
+    const [listaDados, setListaDados] = useState([]);
+
+
+
 
 
 
 
     //Salvar o arquivo e gerar uma nova key_id
 
-    async function salvar_dados(tituloDocumento, documento) {
+    async function salvar_dados(tituloDocumento, documento, id) {
+
+        
+        
 
         await addDoc(collection(db, tituloDocumento), {
 
             documento,
+            id,
+            data: new Date()
 
         }).catch((x) => {
 
@@ -87,7 +97,17 @@ export default function FirebaseProvider({ children }) {
         const querySnapshot = await getDocs(collection(db, tituloDocumento));
         querySnapshot.forEach((doc) => {
 
-            console.log(doc.id, " => ", doc.data());
+            let list = ([]);
+
+            list.push({
+
+                ...doc.data(),
+                id: doc.id
+                
+            })
+ 
+
+            setDadosRecuperados(list);
 
         });
     }
@@ -102,15 +122,44 @@ export default function FirebaseProvider({ children }) {
     async function recuperar_dados_atributos_personalizados(tituloDocumento, atributo_db, atributo_user) {
 
 
-        const q = query(collection(db, tituloDocumento), where(atributo_db, "==", atributo_user));
 
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
 
-            // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data());
+        const q = query(collection(db, tituloDocumento), where(atributo_db, "==", atributo_user), orderBy('data', 'desc'));
+        const querySnapshot = onSnapshot(q, (querySnap) => {
+
+            const lista = ([]);
+
+            querySnap.forEach(doc => {
+
+                lista.push({
+                    ...doc.data(),
+                    id: doc.id
+                });
+            });
+  
+
+            setListaDados(lista);
+
+
 
         });
+
+
+
+    }
+
+
+
+
+
+
+
+
+    //Remover data no firestore
+
+    async function deletar_documento(titulo, id_doc) {
+
+        await deleteDoc(doc(db, titulo, id_doc));
 
     }
 
@@ -122,9 +171,22 @@ export default function FirebaseProvider({ children }) {
 
 
 
+
     return (
-        <FirebaseContext.Provider value={{ salvar_dados_comId_noDoc, recupera_dados_comId_noDoc, salvar_dados, recuperar_todos_dados_colecao, recuperar_dados_atributos_personalizados, valorRecuperadoGetWithId }}>
+        <FirebaseContext.Provider value={{
+
+            salvar_dados_comId_noDoc,
+            recupera_dados_comId_noDoc,
+            salvar_dados, recuperar_todos_dados_colecao,
+            recuperar_dados_atributos_personalizados,
+            deletar_documento,
+            valorRecuperadoGetWithId,
+            dadosRecuperados,
+            listaDados
+        }}>
+
             {children}
+
         </FirebaseContext.Provider>
     )
 

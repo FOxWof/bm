@@ -13,7 +13,7 @@ import { OrcamentoContext } from './../Context/OrcamentoContext';
 
 export default function PickerSelectPagamento() {
 
-  const [selectedLanguage, setSelectedLanguage] = useState();
+  const [selectedLanguage, setSelectedLanguage] = useState(1);
   const {get_formaPagamento} = useContext(OrcamentoContext);
 
 

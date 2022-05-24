@@ -23,7 +23,7 @@ export default function CardAtendimentoAdm(data) {
   const add = format(new Date(date), 'dd/MM');
 
 
-
+  console.log(data);
 
 
   let localUsuario = 'Aguarde...';
@@ -203,121 +203,129 @@ export default function CardAtendimentoAdm(data) {
 
 
   return (
-    <View key={data.data.id} style={css.bgCard}>
+    <>
 
+      <View key={data.data.id} style={css.bgCard}>
 
-      <TxtTitulo
-        cor={colorPretoMaisFraco}
-        tamanho={15}
-        titulo={'Informações do cliente'} />
-
-      <View style={css.header}>
-
-        <Ionicons name='location' size={20} />
-        <Text style={css.txtLocal}>{localUsuario}</Text>
-
-      </View>
-
-      <View style={css.body}>
-
-
-
-        <View style={{ flexDirection: 'row' }}>
-          <Ionicons name='person' size={20} />
-          <Text style={css.txt}>{nomeUser}</Text>
-
-          <Ionicons style={{ marginLeft: 40 }} name='logo-whatsapp' size={20} />
-          <Text style={css.txt}>{contatoUser}</Text>
-        </View>
-
-
-        <View style={{ flexDirection: 'row', marginTop: 10 }}>
-          <Ionicons name='car' size={20} />
-          <Text style={css.txt}>{veiculo}</Text>
-
-          <Ionicons style={{ marginLeft: 40 }} name='alert-circle-outline' size={20} />
-          <Text style={css.txt}>{obs}</Text>
-        </View>
-
-
-        <View style={{ flexDirection: 'row', marginTop: 10 }}>
-          <Ionicons name='car' size={20} />
-          <Text style={css.txt}>{numPneu}</Text>
-
-          <Ionicons style={{ marginLeft: 40 }} name='construct-outline' size={20} />
-          <Text style={css.txt}>{tipo}</Text>
-        </View>
-
-        <View style={{ flexDirection: 'row', marginTop: 10 }}>
-          <Ionicons name='car' size={20} />
-          <Text style={css.txt}>{qntdPneu}</Text>
-
-          <Ionicons style={{ marginLeft: 40 }} name='card-outline' size={20} />
-          <Text style={css.txt}>{fg}</Text>
-        </View>
-
-
-
-      </View>
-
-
-      <View style={css.footer}>
 
         <TxtTitulo
           cor={colorPretoMaisFraco}
           tamanho={15}
-          titulo={'Informações do atendimento'} />
+          titulo={'Informações do cliente'} />
 
+        <View style={css.header}>
 
-        <View style={{ flexDirection: 'row', marginTop: 15 }}>
-          <Ionicons name='time-outline' size={20} />
-          <Text style={css.txtHorario}>{add} as {dataTime}</Text>
-
-          <Ionicons style={{ marginLeft: 40 }} name='time-outline' size={20} />
-          <Text style={css.txt}>{status}</Text>
-        </View>
-
-
-        <View style={{ flexDirection: 'row', marginTop: 20 }}>
-          <Ionicons name='card-outline' size={20} />
-          <Text style={css.txtHorario}>Deslocamento: R$ {valor_deslocamento.toFixed(0)},00</Text>
+          <Ionicons name='location' size={20} />
+          <Text style={css.txtLocal}>{localUsuario}</Text>
 
         </View>
 
-        <View style={{ flexDirection: 'row', marginTop: 15 }}>
+        <View style={css.body}>
 
-          <Ionicons style={{}} name='card-outline' size={20} />
-          <Text style={css.txtHorario}>Serviço R${valor_servico},00</Text>
+
+
+          <View style={{ flexDirection: 'row' }}>
+            <Ionicons name='person' size={20} />
+            <Text style={css.txt}>{nomeUser}</Text>
+
+            <Ionicons style={{ marginLeft: 40 }} name='logo-whatsapp' size={20} />
+            <Text style={css.txt}>{contatoUser}</Text>
+          </View>
+
+
+          <View style={{ flexDirection: 'row', marginTop: 10 }}>
+            <Ionicons name='car' size={20} />
+            <Text style={css.txt}>{veiculo}</Text>
+
+            <Ionicons style={{ marginLeft: 40 }} name='alert-circle-outline' size={20} />
+            <Text style={css.txt}>{obs}</Text>
+          </View>
+
+
+          <View style={{ flexDirection: 'row', marginTop: 10 }}>
+            <Ionicons name='car' size={20} />
+            <Text style={css.txt}>{numPneu}</Text>
+
+            <Ionicons style={{ marginLeft: 40 }} name='construct-outline' size={20} />
+            <Text style={css.txt}>{tipo}</Text>
+          </View>
+
+          <View style={{ flexDirection: 'row', marginTop: 10 }}>
+            <Ionicons name='car' size={20} />
+            <Text style={css.txt}>{qntdPneu}</Text>
+
+            <Ionicons style={{ marginLeft: 40 }} name='card-outline' size={20} />
+            <Text style={css.txt}>{fg}</Text>
+          </View>
+
+
+
         </View>
 
 
+        <View style={css.footer}>
 
-        <View style={{ flexDirection: 'row', marginTop: 15 }}>
+          <TxtTitulo
+            cor={colorPretoMaisFraco}
+            tamanho={15}
+            titulo={'Informações do atendimento'} />
 
-          <Ionicons name='card-outline' size={20} />
-          <Text style={css.txtHorario}>Total R$ {valor_total.toFixed(0)},00</Text>
+
+          <View style={{ flexDirection: 'row', marginTop: 15 }}>
+            <Ionicons name='time-outline' size={20} />
+            <Text style={css.txtHorario}>{add} as {dataTime}</Text>
+
+            <Ionicons style={{ marginLeft: 40 }} name='time-outline' size={20} />
+            <Text style={css.txt}>{status}</Text>
+          </View>
+
+
+          <View style={{ flexDirection: 'row', marginTop: 20 }}>
+            <Ionicons name='card-outline' size={20} />
+            <Text style={css.txtHorario}>Deslocamento: R$ {valor_deslocamento.toFixed(0)},00</Text>
+
+          </View>
+
+          <View style={{ flexDirection: 'row', marginTop: 15 }}>
+
+            <Ionicons style={{}} name='card-outline' size={20} />
+            <Text style={css.txtHorario}>Serviço R${valor_servico},00</Text>
+          </View>
+
+
+
+          <View style={{ flexDirection: 'row', marginTop: 15 }}>
+
+            <Ionicons name='card-outline' size={20} />
+            <Text style={css.txtHorario}>Total R$ {valor_total.toFixed(0)},00</Text>
+
+          </View>
+
+
+          <PickerColaboradorAdm />
+
+          <View style={css.viewFooter}>
+
+
+
+            <Button onPress={() => statusAnterior()}>Anterior</Button>
+            <Button onPress={() => statusProximo()}>Proximo</Button>
+            <Button onPress={() => cancelar()}>Cancelar</Button>
+
+
+
+          </View>
 
         </View>
 
-
-        <PickerColaboradorAdm />
-
-        <View style={css.viewFooter}>
-
-
-
-          <Button onPress={() => statusAnterior()}>Anterior</Button>
-          <Button onPress={() => statusProximo()}>Proximo</Button>
-          <Button onPress={() => cancelar()}>Cancelar</Button>
-
-
-
-        </View>
 
       </View>
 
 
-    </View>
+
+
+    </>
+
   );
 }
 

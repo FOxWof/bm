@@ -4,8 +4,9 @@ import CardHeader from '../../Adapters/CardHeader';
 import BotaoVoltarAoInicio from '../../Componentes/BotaoVoltarAoInicio';
 import { StackActions, useNavigation } from '@react-navigation/native';
 import { colorBrancoFosco } from '../../../Paleta_cores';
-import { getFirestore, collection, getDocs, doc, setDoc, getDoc, addDoc,updateDoc , query, where, deleteDoc, orderBy, onSnapshot } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, doc, setDoc, getDoc, addDoc, updateDoc, query, where, deleteDoc, orderBy, onSnapshot } from 'firebase/firestore';
 import { initializeAppIfNecessary } from '../../../FirebaseConfig';
+import ModalAtendimentos from '../../Componentes/ModalAtendimentos';
 
 
 
@@ -18,7 +19,7 @@ export default function GridFiltros() {
 
 
     const navegacao = useNavigation();
-    
+
 
 
 
@@ -31,6 +32,20 @@ export default function GridFiltros() {
     const [cancelado, setCancelado] = useState([]);
 
 
+    const [abre, setAbre] = useState(false);
+    const [abrecam, setAbreCam] = useState(false);
+    const [abreLocal, setAbreLocal] = useState(false);
+    const [abreConcluidos, setAbreConcluidos] = useState(false);
+    const [abreNoPagos, setAbreNoPagos] = useState(false);
+    const [abreCancelados, setAbreCancelados] = useState(false);
+
+
+    const fechar = () => setAbre(false);
+    const fecharCam = () => setAbreCam(false);
+    const fecharLocal = () => setAbreLocal(false);
+    const fecharConc = () => setAbreConcluidos(false);
+    const fecharNoPagos = () => setAbreNoPagos(false);
+    const fecharCancelados = () => setAbreCancelados(false);
 
 
 
@@ -55,7 +70,7 @@ export default function GridFiltros() {
                 });
 
 
-                setEmEspera(lista); 
+                setEmEspera(lista);
 
 
             });
@@ -70,7 +85,7 @@ export default function GridFiltros() {
 
 
 
-    
+
 
 
     useEffect(() => {
@@ -92,7 +107,7 @@ export default function GridFiltros() {
                 });
 
 
-                setCaminho(lista); 
+                setCaminho(lista);
 
 
             });
@@ -129,7 +144,7 @@ export default function GridFiltros() {
                 });
 
 
-                setLocal(lista); 
+                setLocal(lista);
 
 
             });
@@ -144,13 +159,13 @@ export default function GridFiltros() {
 
 
 
-    
+
     useEffect(() => {
 
         async function recupera1() {
 
 
-            const q = query(collection(db, 'atendimentos'), where('status', "==",3), orderBy('data', 'desc'));
+            const q = query(collection(db, 'atendimentos'), where('status', "==", 3), orderBy('data', 'desc'));
             const querySnapshot = onSnapshot(q, (querySnap) => {
 
                 const lista = ([]);
@@ -164,7 +179,7 @@ export default function GridFiltros() {
                 });
 
 
-                setConcluido(lista); 
+                setConcluido(lista);
 
 
             });
@@ -181,8 +196,8 @@ export default function GridFiltros() {
 
 
 
-    
-    
+
+
     useEffect(() => {
 
         async function recupera1() {
@@ -202,7 +217,7 @@ export default function GridFiltros() {
                 });
 
 
-                setNoPago(lista); 
+                setNoPago(lista);
 
 
             });
@@ -220,9 +235,9 @@ export default function GridFiltros() {
 
 
 
-    
-    
-    
+
+
+
     useEffect(() => {
 
         async function recupera1() {
@@ -242,7 +257,7 @@ export default function GridFiltros() {
                 });
 
 
-                setCancelado(lista); 
+                setCancelado(lista);
 
 
             });
@@ -271,16 +286,46 @@ export default function GridFiltros() {
 
 
 
-    
+
 
     function handler_att() {
-        navegacao.dispatch(StackActions.replace('Atendimentos'));
+        setAbre(true)
+    }
+
+
+
+
+    function h_caminho() {
+        setAbreCam(true);
+    }
+
+
+
+    function h_local() {
+        setAbreLocal(true)
+    }
+
+
+
+
+    function h_concluido() {
+        setAbreConcluidos(true);
     }
 
 
 
 
 
+    function h_naoPagos() {
+        setAbreNoPagos(true)
+    }
+
+
+
+
+    function h_cancelados() {
+        setAbreCancelados(true);
+    }
 
 
 
@@ -290,41 +335,54 @@ export default function GridFiltros() {
 
     return (
         <SafeAreaView style={css.bg}>
+            <ScrollView>
+                <ModalAtendimentos tituloBotao={'Atendimentos em espera'} hidden={fechar} data={emEspera} visible={abre} />
+                <ModalAtendimentos tituloBotao={'Atendimentos a caminho'} hidden={fecharCam} data={aCaminho} visible={abrecam} />
+
+                <ModalAtendimentos tituloBotao={'Atendimentos no local'} hidden={fecharLocal} data={local} visible={abreLocal} />
+                <ModalAtendimentos tituloBotao={'Atendimentos concluidos'} hidden={fecharConc} data={concluido} visible={abreConcluidos} />
+
+                <ModalAtendimentos tituloBotao={'Atendimentos não pagos'} hidden={fecharNoPagos} data={noPago} visible={abreNoPagos} />
+                <ModalAtendimentos tituloBotao={'Atendimentos cancelados'} hidden={fecharCancelados} data={cancelado} visible={abreCancelados} />
 
 
-            <View style={css.header}>
-
-                <BotaoVoltarAoInicio
-                    acao={handler_voltar}
-                    titulo={'Voltar ao inicio'} />
 
 
-            </View>
 
-            <View style={{ flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center' }}>
-                <ScrollView>
+
+                <View style={css.header}>
+
+                    <BotaoVoltarAoInicio
+                        acao={handler_voltar}
+                        titulo={'Voltar ao inicio'} />
+
+
+                </View>
+
+                <View style={{ flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center' }}>
+
 
 
                     <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                         <CardHeader acao={handler_att} quantidade={emEspera.length} tituloCard={'Em espera'} />
-                        <CardHeader quantidade={aCaminho.length} tituloCard={'A caminho'} />
+                        <CardHeader acao={h_caminho} quantidade={aCaminho.length} tituloCard={'A caminho'} />
                     </View>
 
                     <View style={{ flexDirection: 'row' }}>
-                        <CardHeader quantidade={local.length} tituloCard={'No local'} />
-                        <CardHeader quantidade={concluido.length} tituloCard={'Concluidos'} />
+                        <CardHeader acao={h_local} quantidade={local.length} tituloCard={'No local'} />
+                        <CardHeader acao={h_concluido} quantidade={concluido.length} tituloCard={'Concluidos'} />
                     </View>
 
                     <View style={{ flexDirection: 'row' }}>
-                        <CardHeader quantidade={noPago.length} tituloCard={'Não pagos'} />
-                        <CardHeader quantidade={cancelado.length} tituloCard={'Cancelados'} />
+                        <CardHeader acao={h_naoPagos} quantidade={noPago.length} tituloCard={'Não pagos'} />
+                        <CardHeader acao={h_cancelados} quantidade={cancelado.length} tituloCard={'Cancelados'} />
                     </View>
 
 
 
-                </ScrollView>
 
-            </View>
+                </View>
+            </ScrollView>
 
         </SafeAreaView>
 

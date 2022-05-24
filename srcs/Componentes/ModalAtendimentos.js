@@ -7,36 +7,42 @@ import BotaoVoltarAoInicio from './BotaoVoltarAoInicio';
 
 
 
-export default function ModalAtendimentos({ visible, data }) {
+export default function ModalAtendimentos({ visible, data, hidden, tituloBotao }) {
 
 
-
-
-    const navegacao = useNavigation();
-
-
-
-
+ 
+ 
+    console.log(data);
 
 
 
     //FUNCS
 
     function handler_voltar() {
-        navegacao.dispatch(StackActions.replace('PainelAdm'));
+        hidden()
     }
 
 
+
+
     return (
+        <>
+        
+
         <Modal animationType='slide' transparent={true} visible={visible} >
 
             <View style={css.header}>
                 <StatusBar hidden={false} />
 
-                <BotaoVoltarAoInicio
-                    acao={handler_voltar}
-                    titulo={'Voltar'}
-                />
+                <View style={css.header}>
+
+                    <BotaoVoltarAoInicio
+                        acao={handler_voltar}
+                        titulo={tituloBotao}
+                    />
+
+                </View>
+
 
                 <FlatList
                     data={data}
@@ -46,11 +52,15 @@ export default function ModalAtendimentos({ visible, data }) {
                 />
 
 
-
             </View>
 
 
+
+
         </Modal>
+
+        </>
+
     );
 }
 
@@ -63,8 +73,14 @@ const css = StyleSheet.create({
 
     header: {
         flex: 1,
-        backgroundColor: colorCardOptions,
+        padding: 10,
+        backgroundColor:  colorCardOptions
 
 
     },
+
+    body: {
+        flex: 2,
+        margin: 10,
+    }
 })

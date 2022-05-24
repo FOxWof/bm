@@ -398,7 +398,7 @@ const css = StyleSheet.create({
 
     bg: {
         flex: 1,
-        backgroundColor: colorBrancoFosco
+        backgroundColor: 'white'
 
     },
 

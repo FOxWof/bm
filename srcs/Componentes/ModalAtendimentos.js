@@ -11,9 +11,6 @@ export default function ModalAtendimentos({ visible, data, hidden, tituloBotao }
 
 
  
- 
-    console.log(data);
-
 
 
     //FUNCS
@@ -29,18 +26,18 @@ export default function ModalAtendimentos({ visible, data, hidden, tituloBotao }
         <>
         
 
-        <Modal animationType='slide' transparent={true} visible={visible} >
+        <Modal animationType='slide'  visible={visible} >
 
-            <View style={css.header}>
+            <View style={css.body}>
                 <StatusBar hidden={false} />
 
                 <View style={css.header}>
 
-                    <BotaoVoltarAoInicio
+
+                <BotaoVoltarAoInicio
                         acao={handler_voltar}
                         titulo={tituloBotao}
                     />
-
                 </View>
 
 
@@ -71,16 +68,17 @@ export default function ModalAtendimentos({ visible, data, hidden, tituloBotao }
 const css = StyleSheet.create({
 
 
-    header: {
-        flex: 1,
-        padding: 10,
-        backgroundColor:  colorCardOptions
-
+    header: { 
+        backgroundColor:  'white',
+        width: '100%',
+        padding: 5
 
     },
 
     body: {
-        flex: 2,
-        margin: 10,
+        flex: 2, 
+        backgroundColor: colorCardOptions
+
+
     }
 })

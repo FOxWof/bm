@@ -42,8 +42,6 @@ export default function Colaboradores() {
 
 
 
-    console.log(allColaboradoresMovel);
-
 
     function handler_voltar() {
         navegacao.dispatch(StackActions.replace('PainelAdm'));

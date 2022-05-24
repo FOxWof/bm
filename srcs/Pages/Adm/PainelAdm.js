@@ -1,9 +1,14 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { View, SafeAreaView, StyleSheet, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { AuthContext } from '../../Context/AuthContext';
-import {FirebaseContext} from '../../Context/FirebaseContext';
+import { FirebaseContext } from '../../Context/FirebaseContext';
 import CardComImg from '../../Componentes/CardComImg';
-import { useNavigation, StackActions } from '@react-navigation/native'; 
+import { useNavigation, StackActions } from '@react-navigation/native';
+import BotaoBranco from './../../Componentes/BotaoBranco';
+
+
+
+
 
 
 export default function PainelAdm() {
@@ -24,7 +29,6 @@ export default function PainelAdm() {
 
 
 
-    
 
 
 
@@ -32,11 +36,12 @@ export default function PainelAdm() {
 
 
 
-    useEffect(()=>{
-        
+
+    useEffect(() => {
+
         limparQuery();
 
-    } , [])
+    }, [])
 
 
 
@@ -91,14 +96,11 @@ export default function PainelAdm() {
 
             <ScrollView>
 
+                <View style={css.header}>
+                    <BotaoBranco acao={deslogar} titulo={'Deslogar'} />
 
-                <TouchableOpacity onPress={() => deslogar()}>
+                </View>
 
-                    <View style={css.header}>
-                        <Text>Nome adm</Text>
-
-                    </View>
-                </TouchableOpacity>
 
 
 
@@ -117,6 +119,14 @@ export default function PainelAdm() {
 
                     </View>
 
+
+                    <View style={css.containerCards}>
+
+                        <CardComImg acao={irParaClientes} imageCard={imgCard3} tituloCard={'Relatorios'} />
+                        <CardComImg acao={irParaColaboradores} imageCard={imgCard4} tituloCard={'Veiculos'} />
+
+                    </View>
+
                 </View>
 
 
@@ -130,18 +140,20 @@ export default function PainelAdm() {
 const css = StyleSheet.create({
     bg: {
         flex: 1,
+        backgroundColor: 'white',
+
     },
 
     header: {
-        backgroundColor: 'white',
-        height: 150,
+        padding: 20
 
 
     },
 
     body: {
 
-        paddingTop: 20
+        paddingTop: 20,
+        backgroundColor: 'white'
 
     },
 

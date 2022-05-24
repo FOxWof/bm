@@ -30,7 +30,7 @@ export default function CardHeader({ tituloCard, quantidade, acao }) {
 
 const css = StyleSheet.create({
 
-  card: { width: 150, height: 160, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white', borderRadius: 10, margin: 10, marginBottom: 10, elevation: 3, shadowColor: colorPretoMaisFraco },
+  card: { width: 130, height: 140, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white', borderRadius: 10, margin: 10, marginBottom: 10, elevation: 3, shadowColor: colorPretoMaisFraco },
 
   titulo: { fontSize: 15, textAlign: 'center' },
 

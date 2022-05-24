@@ -23,8 +23,6 @@ export default function CardAtendimentoAdm(data) {
   const add = format(new Date(date), 'dd/MM');
 
 
-  console.log(data);
-
 
   let localUsuario = 'Aguarde...';
   let nomeUser = 'Aguarde...';

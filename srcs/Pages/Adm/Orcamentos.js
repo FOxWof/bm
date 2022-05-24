@@ -1,7 +1,11 @@
-import React from 'react';
-import { View, SafeAreaView, StyleSheet, ScrollView } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { View, SafeAreaView, StyleSheet, ScrollView, FlatList } from 'react-native';
 import BotaoVoltarAoInicio from '../../Componentes/BotaoVoltarAoInicio';
 import { StackActions, useNavigation } from '@react-navigation/native';
+import { FirebaseContext } from '../../Context/FirebaseContext';
+
+
+
 
 
 
@@ -10,17 +14,11 @@ import { StackActions, useNavigation } from '@react-navigation/native';
 export default function Orcamentos() {
 
 
-  const navegacao = useNavigation();
+    const navegacao = useNavigation();
 
 
-
-
-
-
-
-  function handler_voltar() {
-    navegacao.dispatch(StackActions.replace('PainelAdm'));
-}
+    const { recuperar_dados_atributos_personalizados, listaDados } = useContext(FirebaseContext);
+    const [allOrcamentos, setOrcamento] = useState([]);
 
 
 
@@ -30,47 +28,91 @@ export default function Orcamentos() {
 
 
 
-  return (
-      <SafeAreaView style={css.bg}>
-          <ScrollView>
+    //USEEFFECTS
 
-              <View style={css.header}>
+    useEffect(() => {
 
-                  <BotaoVoltarAoInicio
-                      acao={handler_voltar}
-                      titulo={'Orçamentos'} />
+        recuperar_dados_atributos_personalizados("orcamento", "status", 0, "asc");
+
+    }, []);
 
 
-              </View>
 
-              <View style={css.body}>
-                 
-              </View>
+    useEffect(() => {
+
+        setOrcamento(listaDados);
 
 
-          </ScrollView>
+        console.log(listaDados)
 
-      </SafeAreaView>
-  );
+    }, [listaDados]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function handler_voltar() {
+        navegacao.dispatch(StackActions.replace('PainelAdm'));
+    }
+
+
+
+
+
+
+
+
+
+    return (
+        <SafeAreaView style={css.bg}>
+            <ScrollView>
+
+                <View style={css.header}>
+
+                    <BotaoVoltarAoInicio
+                        acao={handler_voltar}
+                        titulo={'Orçamentos'} />
+
+
+                </View>
+
+                <View style={css.body}>
+
+                </View>
+
+
+            </ScrollView>
+
+        </SafeAreaView>
+    );
 }
 
 
 
 const css = StyleSheet.create({
 
-  bg: {
-      flex: 1
-  },
+    bg: {
+        flex: 1
+    },
 
-  header: {
-      padding: 15,
-      backgroundColor: 'white'
-  },
+    header: {
+        padding: 15,
+        backgroundColor: 'white'
+    },
 
-  body: {
-      flex: 2,
-      margin: 10, 
-  }
+    body: {
+        flex: 2,
+        margin: 10,
+    }
 
 
 

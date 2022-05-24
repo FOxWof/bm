@@ -6,9 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function CardClientes(data) {
 
-
-    console.log(data.data.dados);
-
+ 
 
     let nomeCliente = data.data.dados.nome;
     let emailCliente = data.data.dados.email;
@@ -53,7 +51,7 @@ const css = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingTop: 15,
-        padding: 15, 
+        padding: 15,
 
     },
 
@@ -65,7 +63,8 @@ const css = StyleSheet.create({
 
         backgroundColor: 'white',
         borderRadius: 10,
-        padding: 15, 
+        padding: 15,
+        marginBottom: 10
 
     },
 

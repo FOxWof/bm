@@ -53,7 +53,7 @@ export default function PainelAdm() {
 
     function irParaAtendimentos() {
 
-        navegacao.dispatch(StackActions.replace('Atendimentos'));
+        navegacao.dispatch(StackActions.push('GridFiltros'));
 
     }
 

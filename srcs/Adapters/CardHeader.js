@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Subheading, Title } from 'react-native-paper'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -6,22 +6,21 @@ import { colorPretoMaisFraco } from '../../Paleta_cores';
 
 
 
+
 export default function CardHeader({ tituloCard, quantidade, acao }) {
 
 
-  //  <Image style={css.img} resizeMode='contain' source={imageCard} />
-
 
   return (
-    <TouchableOpacity onPress={()=> acao() } style={{ flexDirection: 'column'}}>
+    <TouchableOpacity onPress={() => acao()} style={{ flexDirection: 'column' }}>
 
-    <View style={css.card}>
+      <View style={css.card}>
 
-      <Title>{quantidade}</Title>
+        <Title>{quantidade}</Title>
 
-      <Subheading style={css.titulo}>{tituloCard}</Subheading>
+        <Subheading style={css.titulo}>{tituloCard}</Subheading>
 
-    </View>
+      </View>
 
 
     </TouchableOpacity>
@@ -31,9 +30,9 @@ export default function CardHeader({ tituloCard, quantidade, acao }) {
 
 const css = StyleSheet.create({
 
-  card: { width: 100, height: 90, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 10, margin: 10, marginBottom: 10 },
+  card: { width: 150, height: 160, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white', borderRadius: 10, margin: 10, marginBottom: 10, elevation: 3, shadowColor: colorPretoMaisFraco },
 
-  titulo: { fontSize: 13, textAlign: 'center' },
+  titulo: { fontSize: 15, textAlign: 'center' },
 
   botao: { width: '100%' },
 

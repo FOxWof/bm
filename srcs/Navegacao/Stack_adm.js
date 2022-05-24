@@ -6,6 +6,7 @@ import Atendimentos from '../Pages/Adm/Atendimentos';
 import Orcamentos from '../Pages/Adm/Orcamentos';
 import Clientes from '../Pages/Adm/Clientes';
 import Colaboradores from '../Pages/Adm/Colaboradores';
+import GridFiltros from '../Pages/Adm/GridFiltros';
 
 
 
@@ -30,6 +31,9 @@ export default function Stack_adm() {
             <stack.Screen name='Orcamentos' component={Orcamentos} />
             <stack.Screen name='Clientes' component={Clientes} />
             <stack.Screen name='Colaboradores' component={Colaboradores} />
+            <stack.Screen name='GridFiltros' component={GridFiltros} />
+
+            
 
 
 

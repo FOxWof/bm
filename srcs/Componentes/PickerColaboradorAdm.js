@@ -17,6 +17,9 @@ export default function PickerColaboradorAdm() {
   const {get_numPneu} = useContext(OrcamentoContext);
 
 
+  const [colabs, setColabs] = useState([
+    {'id': 1, "Nome": "Wilson Lima"}
+  ])
 
   
 
@@ -53,7 +56,8 @@ export default function PickerColaboradorAdm() {
           onValueChange={(itemValue, itemIndex) =>
             setSelectedLanguage(itemValue, itemIndex)
 
-          }>
+          }> 
+
 
           <Picker.Item label="Wilson" value={0} />
           <Picker.Item label="Evaldo" value={1} /> 

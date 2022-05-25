@@ -12,7 +12,7 @@ import { FirebaseContext } from '../Context/FirebaseContext';
 
 
 export default function CardOrcamento(data) {
- 
+
 
   const { atualiza_documento } = useContext(FirebaseContext);
 
@@ -257,10 +257,18 @@ export default function CardOrcamento(data) {
           </View>
 
 
+          <View style={{ flexDirection: 'row', marginTop: 15 }}>
+            <Ionicons name='time-outline' size={20} />
+            <Text style={css.txtHorario}>{add} as {dataTime}</Text>
+
+            <Ionicons style={{ marginLeft: 25 }} name='time-outline' size={20} /> 
+            <Text style={css.txt}>Em orçamento</Text>
+          </View>
+
 
         </View>
 
- 
+
 
 
       </View>
@@ -310,7 +318,7 @@ const css = StyleSheet.create({
 
   txtHorario: {
     marginLeft: 10,
-    fontSize: 14,
+    fontSize: 13,
   },
 
   txt: {

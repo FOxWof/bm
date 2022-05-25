@@ -117,8 +117,7 @@ const css = StyleSheet.create({
     },
 
     body: {
-        flex: 2,
-        margin: 10,
+        flex: 2,  
     }
 
 

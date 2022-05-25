@@ -11,9 +11,8 @@ import { FirebaseContext } from '../Context/FirebaseContext';
 
 
 
-export default function CardAtendimentoAdm(data) {
-
-
+export default function CardOrcamento(data) {
+ 
 
   const { atualiza_documento } = useContext(FirebaseContext);
 
@@ -52,16 +51,16 @@ export default function CardAtendimentoAdm(data) {
   if (data.data.documento != undefined || data.data.documento != null) {
 
     numStatus = data.data.status;
-    localUsuario = data.data.documento.doc.dados_Confirmacao.dados.localUserAtual;
-    nomeUser = data.data.documento.doc.dados_Confirmacao.dados_usuario.nome_user;
-    contatoUser = data.data.documento.doc.dados_Confirmacao.dados_usuario.whatsapp_user;
+    localUsuario = data.data.documento.dados_Confirmacao.dados.localUserAtual;
+    nomeUser = data.data.documento.dados_Confirmacao.dados_usuario.nome_user;
+    contatoUser = data.data.documento.dados_Confirmacao.dados_usuario.whatsapp_user;
 
-    veiculo = data.data.documento.doc.dados_Confirmacao.detalhes_orcamento.veiculo;
-    obs = data.data.documento.doc.dados_Confirmacao.detalhes_orcamento.obs
-    tipo = data.data.documento.doc.tipo_de_servico;
-    numPneu = data.data.documento.doc.numeracao_do_pneu;
-    qntdPneu = data.data.documento.doc.qntd_de_pneu;
-    fg = data.data.documento.doc.forma_pagamento;
+    veiculo = data.data.documento.dados_Confirmacao.detalhes_orcamento.veiculo;
+    obs = data.data.documento.dados_Confirmacao.detalhes_orcamento.obs
+    tipo = data.data.documento.tipo_de_servico;
+    numPneu = data.data.documento.numeracao_do_pneu;
+    qntdPneu = data.data.documento.qntd_de_pneu;
+    fg = data.data.documento.forma_pagamento;
 
 
     dataTime = hr
@@ -69,7 +68,7 @@ export default function CardAtendimentoAdm(data) {
 
 
     valor_servico = data.data.documento.valor_servio;
-    valor_deslocamento = data.data.documento.doc.dados_Confirmacao.dados.distPrice.valorDeslocamento;
+    valor_deslocamento = data.data.documento.dados_Confirmacao.dados.distPrice.valorDeslocamento;
     valor_total = data.data.documento.Valor_total;
 
     status = data.data.status;
@@ -210,7 +209,7 @@ export default function CardAtendimentoAdm(data) {
         <TxtTitulo
           cor={colorPretoMaisFraco}
           tamanho={15}
-          titulo={'Informações do cliente'} />
+          titulo={'Informações do orçamento'} />
 
         <View style={css.header}>
 
@@ -261,61 +260,7 @@ export default function CardAtendimentoAdm(data) {
 
         </View>
 
-
-        <View style={css.footer}>
-
-          <TxtTitulo
-            cor={colorPretoMaisFraco}
-            tamanho={15}
-            titulo={'Informações do atendimento'} />
-
-
-          <View style={{ flexDirection: 'row', marginTop: 15 }}>
-            <Ionicons name='time-outline' size={20} />
-            <Text style={css.txtHorario}>{add} as {dataTime}</Text>
-
-            <Ionicons style={{ marginLeft: 40 }} name='time-outline' size={20} />
-            <Text style={css.txt}>{status}</Text>
-          </View>
-
-
-          <View style={{ flexDirection: 'row', marginTop: 20 }}>
-            <Ionicons name='card-outline' size={20} />
-            <Text style={css.txtHorario}>Deslocamento: R$ {valor_deslocamento.toFixed(0)},00</Text>
-
-          </View>
-
-          <View style={{ flexDirection: 'row', marginTop: 15 }}>
-
-            <Ionicons style={{}} name='card-outline' size={20} />
-            <Text style={css.txtHorario}>Serviço R${valor_servico},00</Text>
-          </View>
-
-
-
-          <View style={{ flexDirection: 'row', marginTop: 15 }}>
-
-            <Ionicons name='card-outline' size={20} />
-            <Text style={css.txtHorario}>Total R$ {valor_total.toFixed(0)},00</Text>
-
-          </View>
-
-
-          <PickerColaboradorAdm />
-
-          <View style={css.viewFooter}>
-
-
-
-            <Button onPress={() => statusAnterior()}>Anterior</Button>
-            <Button onPress={() => statusProximo()}>Proximo</Button>
-            <Button onPress={() => cancelar()}>Cancelar</Button>
-
-
-
-          </View>
-
-        </View>
+ 
 
 
       </View>

@@ -78,7 +78,8 @@ export default function FirebaseProvider({ children }) {
 
         await setDoc(doc(db, tituloDocumento, id), {
             documento,
-            status: 0
+            status: 0,
+            data: new Date()
         }).then((x) => {
 
 

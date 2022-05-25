@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { View, SafeAreaView, StyleSheet, ScrollView, FlatList } from 'react-native';
 import BotaoVoltarAoInicio from '../../Componentes/BotaoVoltarAoInicio';
 import { StackActions, useNavigation } from '@react-navigation/native';
-import { FirebaseContext } from '../../Context/FirebaseContext';
+import { FirebaseContext } from '../../Context/FirebaseContext'; 
+import CardOrcamento from '../../Adapters/CardOrcamento';
 
 
 
@@ -42,8 +43,7 @@ export default function Orcamentos() {
 
         setOrcamento(listaDados);
 
-
-        console.log(listaDados)
+ 
 
     }, [listaDados]);
 
@@ -86,6 +86,13 @@ export default function Orcamentos() {
                 </View>
 
                 <View style={css.body}>
+
+                <FlatList
+                data={allOrcamentos}
+                renderItem={({item})=> <CardOrcamento data={item}/>}
+                keyExtractor={item => item.id}
+
+                />
 
                 </View>
 

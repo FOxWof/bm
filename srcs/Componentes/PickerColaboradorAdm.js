@@ -10,22 +10,40 @@ import { OrcamentoContext } from './../Context/OrcamentoContext';
 
 
 
-
 export default function PickerColaboradorAdm() {
 
   const [selectedLanguage, setSelectedLanguage] = useState('');
-  const {get_numPneu} = useContext(OrcamentoContext);
+  const [colabs, setColabs] = useState([]);
+
+  const { get_numPneu } = useContext(OrcamentoContext);
 
 
-  const [colabs, setColabs] = useState([
-    {'id': 1, "Nome": "Wilson Lima"}
-  ])
+  let data = [
 
-  
-
+    { id: 1, nome: 'Wilson Novaes' },
+    { id: 2, nome: 'Evaldo Novaes' },
 
 
-  useEffect(()=>{
+  ]
+
+
+
+
+
+  useEffect(() => {
+
+    setColabs(data);
+
+  }, [])
+
+
+
+
+
+
+
+
+  useEffect(() => {
 
     get_numPneu(selectedLanguage);
 
@@ -37,11 +55,22 @@ export default function PickerColaboradorAdm() {
 
 
 
+
+  const renderProductList = () => {
+    return colabs.map((colaboradores) => {
+      return <Picker.Item label={colaboradores.nome} value={colaboradores} />
+    })
+  }
+
+
+
+
+
   return (
     <View style={css.cardInput} >
 
       <View style={css.headerCard}>
- 
+
         <Text style={css.fontCard}>{'Colaborador'}</Text>
 
 
@@ -54,13 +83,11 @@ export default function PickerColaboradorAdm() {
         <Picker
           selectedValue={selectedLanguage}
           onValueChange={(itemValue, itemIndex) =>
-            setSelectedLanguage(itemValue, itemIndex)
+            setSelectedLanguage(itemValue)
+          }>
 
-          }> 
 
-
-          <Picker.Item label="Wilson" value={0} />
-          <Picker.Item label="Evaldo" value={1} /> 
+          {renderProductList}
 
         </Picker>
       </View>
@@ -92,15 +119,15 @@ const css = StyleSheet.create({
 
 
   headerCard: {
-    flexDirection: 'row', 
-    alignItems: 'center', 
+    flexDirection: 'row',
+    alignItems: 'center',
 
   },
 
 
-  fontCard: { 
-    fontSize: 15, 
-    marginLeft:2,
+  fontCard: {
+    fontSize: 15,
+    marginLeft: 2,
     color: colorPretoMaisFraco,
 
   },

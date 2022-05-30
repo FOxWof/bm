@@ -6,7 +6,7 @@ import Orcamentos from '../Pages/Adm/Orcamentos';
 import Clientes from '../Pages/Adm/Clientes';
 import Colaboradores from '../Pages/Adm/Colaboradores';
 import GridFiltros from '../Pages/Adm/GridFiltros';
-
+import EscolheColab from "../Pages/Adm/EscolheColab";
 
 
 
@@ -21,7 +21,7 @@ export default function Stack_adm() {
     return (
         <stack.Navigator
             screenOptions={{
-                headerShown: false
+              
             }}
         >
 
@@ -29,7 +29,10 @@ export default function Stack_adm() {
             <stack.Screen name='Orcamentos' component={Orcamentos} />
             <stack.Screen name='Clientes' component={Clientes} />
             <stack.Screen name='Colaboradores' component={Colaboradores} />
-            <stack.Screen name='GridFiltros' component={GridFiltros} />
+            <stack.Screen name='Painel atendimentos' component={GridFiltros} />
+            <stack.Screen name='Escolha um colaborador' component={EscolheColab} />
+            
+            
 
             
 

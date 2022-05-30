@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { initializeAppIfNecessary } from './../../FirebaseConfig';
-import { getFirestore, collection, getDocs, doc, setDoc, getDoc, addDoc,updateDoc , query, where, deleteDoc, orderBy, onSnapshot } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, doc, setDoc, getDoc, addDoc, updateDoc, query, where, deleteDoc, orderBy, onSnapshot } from 'firebase/firestore';
 import { Alert } from 'react-native';
 
 
@@ -29,13 +29,13 @@ export default function FirebaseProvider({ children }) {
 
     //Atuaizar um documento 
 
-    async function atualiza_documento(tituloDocumento, doc_id, valor){
+    async function atualiza_documento(tituloDocumento, doc_id, valor) {
 
         const refDocUpdate = doc(db, tituloDocumento, doc_id);
 
         await updateDoc(refDocUpdate, {
             status: valor
-          });
+        });
 
     }
 
@@ -51,8 +51,8 @@ export default function FirebaseProvider({ children }) {
 
     async function salvar_dados(tituloDocumento, documento, id) {
 
-        
-        
+
+
 
         await addDoc(collection(db, tituloDocumento), {
 
@@ -126,9 +126,9 @@ export default function FirebaseProvider({ children }) {
 
                 ...doc.data(),
                 id: doc.id
-                
+
             })
- 
+
 
             setDadosRecuperados(list);
 
@@ -159,7 +159,7 @@ export default function FirebaseProvider({ children }) {
                     id: doc.id
                 });
             });
-  
+
 
             setListaDados(lista);
 
@@ -174,10 +174,10 @@ export default function FirebaseProvider({ children }) {
 
 
 
-    function limparQuery(){
+    function limparQuery() {
 
         setListaDados([])
-        
+
     }
 
 
@@ -189,7 +189,7 @@ export default function FirebaseProvider({ children }) {
 
 
 
-    
+
     //Recuperar documentos em uma coleção com atributos personalizados com o where
 
     async function recuperar_dados_pela_data(tituloDocumento) {
@@ -209,7 +209,7 @@ export default function FirebaseProvider({ children }) {
                     id: doc.id
                 });
             });
-  
+
 
             setDadosData(lista);
 

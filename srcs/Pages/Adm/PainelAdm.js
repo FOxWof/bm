@@ -58,7 +58,7 @@ export default function PainelAdm() {
 
     function irParaAtendimentos() {
 
-        navegacao.dispatch(StackActions.push('GridFiltros'));
+        navegacao.dispatch(StackActions.push('Painel atendimentos'));
 
     }
 

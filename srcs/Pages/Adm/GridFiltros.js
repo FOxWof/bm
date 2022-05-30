@@ -39,7 +39,6 @@ export default function GridFiltros() {
     const [abreNoPagos, setAbreNoPagos] = useState(false);
     const [abreCancelados, setAbreCancelados] = useState(false);
 
-
     const fechar = () => setAbre(false);
     const fecharCam = () => setAbreCam(false);
     const fecharLocal = () => setAbreLocal(false);
@@ -335,36 +334,26 @@ export default function GridFiltros() {
 
 
 
-    
 
 
     return (
         <SafeAreaView style={css.bg}>
             <ScrollView>
-                <ModalAtendimentos tituloBotao={'Atendimentos em espera'} hidden={fechar} data={emEspera} visible={abre} />
                 <ModalAtendimentos tituloBotao={'Atendimentos a caminho'} hidden={fecharCam} data={aCaminho} visible={abrecam} />
+                <ModalAtendimentos tituloBotao={'Atendimentos em espera'} hidden={fechar} data={emEspera} visible={abre} />
 
-                <ModalAtendimentos tituloBotao={'Atendimentos no local'} hidden={fecharLocal} data={local} visible={abreLocal} />
                 <ModalAtendimentos tituloBotao={'Atendimentos concluidos'} hidden={fecharConc} data={concluido} visible={abreConcluidos} />
+                <ModalAtendimentos tituloBotao={'Atendimentos no local'} hidden={fecharLocal} data={local} visible={abreLocal} />
 
-                <ModalAtendimentos tituloBotao={'Atendimentos não pagos'} hidden={fecharNoPagos} data={noPago} visible={abreNoPagos} />
                 <ModalAtendimentos tituloBotao={'Atendimentos cancelados'} hidden={fecharCancelados} data={cancelado} visible={abreCancelados} />
+                <ModalAtendimentos tituloBotao={'Atendimentos não pagos'} hidden={fecharNoPagos} data={noPago} visible={abreNoPagos} />
 
 
 
 
 
 
-                <View style={css.header}>
-
-                    <BotaoVoltarAoInicio
-                        acao={handler_voltar}
-                        titulo={'Voltar ao inicio'} />
-
-
-                </View>
-
-                <View style={{ flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center' }}>
+                <View style={css.grid}>
 
 
 
@@ -415,7 +404,9 @@ const css = StyleSheet.create({
     body: {
         flex: 2,
         margin: 10,
-    }
+    },
+
+    grid: { flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center', marginTop: 20 }
 
 
 

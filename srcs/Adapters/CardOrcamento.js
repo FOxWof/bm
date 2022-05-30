@@ -4,8 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import TxtTitulo from '../Componentes/TxtTitulo'
 import { colorPretoMaisFraco } from '../../Paleta_cores';
 import { format, formatDistance, formatRelative, subDays } from 'date-fns'
-import { Button } from 'react-native-paper';
-import PickerColaboradorAdm from '../Componentes/PickerColaboradorAdm';
+import { Button } from 'react-native-paper'; 
 import { FirebaseContext } from '../Context/FirebaseContext';
 
 

@@ -1,12 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View, StyleSheet, Text, Scrollview, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, Scrollview, TouchableOpacity, Modal } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TxtTitulo from '../Componentes/TxtTitulo'
 import { colorPretoMaisFraco } from '../../Paleta_cores';
 import { format, formatDistance, formatRelative, subDays } from 'date-fns'
 import { Button } from 'react-native-paper';
-import PickerColaboradorAdm from '../Componentes/PickerColaboradorAdm';
 import { FirebaseContext } from '../Context/FirebaseContext';
+import { StackActions, useNavigation } from '@react-navigation/native';
 
 
 
@@ -15,35 +15,35 @@ export default function CardAtendimentoAdm(data) {
 
 
 
+  const navegacao = useNavigation();
+
   const { atualiza_documento } = useContext(FirebaseContext);
 
-
-  const date = data.data.data.toDate().toDateString()
   const hr = data.data.data.toDate().toLocaleTimeString('pt-BR')
+  const date = data.data.data.toDate().toDateString()
 
   const add = format(new Date(date), 'dd/MM');
 
-
-
+  let valor_deslocamento = 'Aguarde...';
+  let valor_servico = 'Aguarde...';
   let localUsuario = 'Aguarde...';
-  let nomeUser = 'Aguarde...';
+  let valor_total = 'Aguarde...';
   let contatoUser = 'Aguarde...';
-  let veiculo = 'Aguarde...';
-  let obs = 'Aguarde...';
-  let numPneu = 'Aguarde...';
-  let tipo = 'Aguarde...';
+  let numStatus = 'Aguarde...';
   let qntdPneu = 'Aguarde...';
+  let dataTime = 'Aguarde...';
+  let nomeUser = 'Aguarde...';
+  let veiculo = 'Aguarde...';
+  let numPneu = 'Aguarde...';
+  let status = 'Aguarde...';
+  let tipo = 'Aguarde...';
+  let obs = 'Aguarde...';
   let fg = 'Aguarde...';
 
-  let dataTime = 'Aguarde...';
 
-  let valor_servico = 'Aguarde...';
-  let valor_deslocamento = 'Aguarde...';
-  let valor_total = 'Aguarde...';
 
-  let status = 'Aguarde...';
 
-  let numStatus = 'Aguarde...';
+
 
 
 
@@ -167,12 +167,32 @@ export default function CardAtendimentoAdm(data) {
 
 
 
+
+
+
   function statusProximo() {
 
     if (numStatus <= 4) {
 
-      numStatus = numStatus + 1;
-      atualiza_documento('atendimentos', data.data.id, numStatus);
+
+      if (numStatus == 0) {
+  
+
+        navegacao.navigate('Escolha um colaborador', data);
+
+
+        numStatus = numStatus + 1;
+        atualiza_documento('atendimentos', data.data.id, numStatus);
+        
+
+      } else {
+
+
+        numStatus = numStatus + 1;
+        atualiza_documento('atendimentos', data.data.id, numStatus);
+
+      }
+
 
 
     } else {
@@ -183,6 +203,8 @@ export default function CardAtendimentoAdm(data) {
 
 
   }
+
+
 
 
 
@@ -301,7 +323,6 @@ export default function CardAtendimentoAdm(data) {
           </View>
 
 
-          <PickerColaboradorAdm />
 
           <View style={css.viewFooter}>
 
@@ -316,6 +337,8 @@ export default function CardAtendimentoAdm(data) {
           </View>
 
         </View>
+
+
 
 
       </View>

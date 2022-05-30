@@ -10,7 +10,9 @@ import BotaoVoltarAoInicio from './BotaoVoltarAoInicio';
 export default function ModalAtendimentos({ visible, data, hidden, tituloBotao }) {
 
 
- 
+
+
+
 
 
     //FUNCS
@@ -22,39 +24,44 @@ export default function ModalAtendimentos({ visible, data, hidden, tituloBotao }
 
 
 
+
+
+
+
     return (
         <>
-        
-
-        <Modal animationType='slide'  visible={visible} >
-
-            <View style={css.body}>
-                <StatusBar hidden={false} />
-
-                <View style={css.header}>
 
 
-                <BotaoVoltarAoInicio
-                        acao={handler_voltar}
-                        titulo={tituloBotao}
+            <Modal animationType='slide' visible={visible} >
+
+                <View style={css.body}>
+                    <StatusBar hidden={false} />
+
+                    <View style={css.header}>
+
+
+                        <BotaoVoltarAoInicio
+                            acao={handler_voltar}
+                            titulo={tituloBotao}
+                        />
+                    </View>
+
+
+
+                    <FlatList
+                        data={data}
+                        renderItem={({ item }) => <CardAtendimentoAdm data={item} />}
+                        keyExtractor={item => item.id}
+
                     />
+
+
                 </View>
 
 
-                <FlatList
-                    data={data}
-                    renderItem={({ item }) => <CardAtendimentoAdm data={item} />}
-                    keyExtractor={item => item.id}
-
-                />
 
 
-            </View>
-
-
-
-
-        </Modal>
+            </Modal>
 
         </>
 
@@ -68,15 +75,15 @@ export default function ModalAtendimentos({ visible, data, hidden, tituloBotao }
 const css = StyleSheet.create({
 
 
-    header: { 
-        backgroundColor:  'white',
+    header: {
+        backgroundColor: 'white',
         width: '100%',
         padding: 5
 
     },
 
     body: {
-        flex: 2, 
+        flex: 2,
         backgroundColor: colorCardOptions
 
 
